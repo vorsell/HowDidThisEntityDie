@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <CFR.Settings.Title>この存在はなぜ死んだ？</CFR.Settings.Title>
+  <CFR.Settings.GroupA>設定列1</CFR.Settings.GroupA>
+  <CFR.Settings.GroupB>設定列2</CFR.Settings.GroupB>
+  <CFR.Settings.Mode.Message>メッセージ</CFR.Settings.Mode.Message>
+  <CFR.Settings.Mode.Letter>レター</CFR.Settings.Mode.Letter>
+  <CFR.Settings.LetterType>レターの種類：{0}</CFR.Settings.LetterType>
+  <CFR.Settings.Reset>リセット</CFR.Settings.Reset>
+  <CFR.Settings.ResetConfirm>通知設定をすべてリセットしますか？\n\n設定列を2列に戻します。第1列は既定の危険な存在を選択し、レター（重大な脅威）で通知します。第2列は現在認識されている残りの項目を選択し、メッセージで通知します。現在の通知方法、レターの種類、各項目の割り当ては既定の設定に置き換わります。\n\n発見済みの種類とグループの展開状態は保持します。スクロール位置は有効範囲外の場合のみ調整します。ゲーム内の存在には影響しません。</CFR.Settings.ResetConfirm>
+  <CFR.Settings.SourceGroupTip>{0}\nクリックすると、すべての列でこのグループを展開・折りたたみします。各項目の割り当ては変わりません。</CFR.Settings.SourceGroupTip>
+  <CFR.Settings.UnknownSource>出典不明</CFR.Settings.UnknownSource>
+  <CFR.Settings.Other>その他／未認識の収容個体</CFR.Settings.Other>
+  <CFR.Settings.OtherTip>収容プラットフォーム上で死亡した個体のうち、既知の収容定義にもHeld Humanの分類にも該当しない種類に適用する予備設定です。通常の収容外での死亡には適用しません。</CFR.Settings.OtherTip>
+  <CFR.Settings.HeldHuman>Held Human：人間と異星種族</CFR.Settings.HeldHuman>
+  <CFR.Settings.HeldHumanTip>Held Human用の予備設定です。HAR種族など、対応する人型種族も含みます。実際に収容プラットフォーム上で確認された種族には、個別の行を作成します。</CFR.Settings.HeldHumanTip>
+  <CFR.Settings.StructuralTip>収容機能を持ち、異常な存在に該当するか、プラットフォームでの研究を明示的に必要とする非人型種族が対象です。通常の動物に研究用コンポーネントがあるだけでは対象になりません。</CFR.Settings.StructuralTip>
+  <CFR.Settings.ObservedTip>ロード済みのゲーム内で、収容プラットフォーム上に実在することを確認した種類です。</CFR.Settings.ObservedTip>
+  <CFR.Settings.MutantTip>ミュータントの種類：{0}\n元の動物・人間の種族ではなく、変異状態で分類します。定義上の収容対応は、通常プレイで必ず収容できることを意味しません。</CFR.Settings.MutantTip>
+  <CFR.Settings.EntityTip>Def：{0}\n出典：{1}\n{2}\n警告マークは、死亡時に有害な効果が発生することが判明している種類を示します。定義上は収容可能でも、通常プレイでダウン時に生存できるとは限りません。</CFR.Settings.EntityTip>
+  <CFR.Settings.Help>説明</CFR.Settings.Help>
+  <CFR.Settings.HelpText>収容プラットフォーム上での死亡通知のみを置き換え、ダメージや死亡のルールは変更しません。各種類は最大1つの設定列に所属します。未割り当ての種類は、バニラの通知条件と内容を維持します。他の列に所属する項目は背景が灰色になり、編集できません。専用対応の対象はAnomaly、Held Human、Ratkin Anomaly+です。それ以外には汎用の予備設定を使用します。\n\n初期設定とリセットでは2列を作成し、既定の危険な種類を第1列、現在認識されている残りの種類を第2列に割り当てます。その後は各列が独立し、自動で反転選択されることはありません。追加した列はメッセージ通知で始まり、何も選択されていません。列の削除や選択解除を行うと、その列の種類はバニラの通知に戻ります。「すべて選択」は、折りたたまれたグループや予備設定を含む現在の全項目をこの列へ移し、他の列の選択を解除します。リセットは追加列を削除して既定の通知方法と割り当てを復元しますが、発見記録とグループの展開状態は保持します。\n\n一覧は存在の種族と収容可能なミュータントの種類に基づきます。シャンブラーの元の種族は個別に列挙しません。未認識の人型種族にはHeld Humanの予備設定を、その他の未知の種類には「その他」を使用します。設定一覧の再構築時に使用中のプラットフォームを調べるか、収容個体が死亡した際に、新しい種類を記録します。新しい種類は対応する予備設定の所属列を引き継ぎ、未割り当ての状態も引き継ぎます。独立した項目になった後は、予備設定を変更しても追従しません。\n\n死因、負傷、確率の記録ルールは変わりません。毎tickの走査は追加しません。設定と発見記録は、Mod全体で共通の設定に保存します。\n\nバニラが死亡を確定する処理を選んだ時点で、ダウン時死亡とその実際の確率、健康状態による死亡、またはHediffの時間経過による死亡処理を記録します。健康状態の詳細はKill()が身体を変更する前に、バニラの決定的な判定順序に従って読み取ります。乱数の再抽選や、副作用を持つ可能性のある独自の死亡判定の再実行は行いません。追跡情報はその呼び出し中だけ保持し、個体のセーブデータには書き込まず、毎tickの状態収集も追加しません。\n\n主な死因を1つ表示します。対象は重要部位のHPゼロ、ダウン時死亡、致死的な健康状態、必須能力の喪失、累積負傷の致死しきい値到達、または既知の特殊な仕組みです。対になった臓器は機能グループ全体で確認し、以前から片側の臓器が失われているだけでは死因としません。脳が破壊された場合は、意識ゼロを重ねて表示しません。確認できない経路は「不明」と表示します。\n\n「致死ダメージ」は死亡処理に渡された1つのDamageInfoであり、負傷履歴全体ではありません。数値が実際に失ったHPと一致するとも限りません。例えばRatkin Anomaly+の懐中時計の仕組みでは999が渡されますが、死亡処理を直接呼び出し、脳の除去はその後に行われます。ダメージ情報がなくても、以前に負傷していなかったという意味ではありません。以前の電撃の情報で補うこともありません。バニラの電撃は基礎ダメージの合計が1～3で、2～4回分に等分されます。同じ部位に複数回命中することもあります。\n\nレターには、負傷した各部位の負傷合計と欠損部位を件数制限なしで表示します。負傷の重症度は小数を保持し、HPはゲームの丸め処理に従います。メッセージでは負傷一覧を作成しません。</CFR.Settings.HelpText>
+  <CFR.LetterType.ThreatBig>重大な脅威</CFR.LetterType.ThreatBig>
+  <CFR.LetterType.ThreatSmall>小さな脅威</CFR.LetterType.ThreatSmall>
+  <CFR.LetterType.NegativeEvent>悪い出来事</CFR.LetterType.NegativeEvent>
+  <CFR.LetterType.NeutralEvent>中立の出来事</CFR.LetterType.NeutralEvent>
+  <CFR.LetterType.PositiveEvent>良い出来事</CFR.LetterType.PositiveEvent>
+
+  <CFR.Message>{0}が収容プラットフォームで死亡。死因：{1}</CFR.Message>
+  <CFR.LetterTitle>収容中の存在が死亡：{0}</CFR.LetterTitle>
+  <CFR.Cause.RequiredCapacity>{0}が0%</CFR.Cause.RequiredCapacity>
+  <CFR.Cause.LethalThreshold>累積負傷が致死しきい値に到達</CFR.Cause.LethalThreshold>
+  <CFR.Cause.DownedLogic>不明</CFR.Cause.DownedLogic>
+  <CFR.Cause.OtherLogic>不明</CFR.Cause.OtherLogic>
+  <CFR.Cause.ForcedDowned>ダウン時死亡（強制）</CFR.Cause.ForcedDowned>
+  <CFR.Cause.ChanceOnDowned>ダウン時死亡（死亡確率：{0}）</CFR.Cause.ChanceOnDowned>
+  <CFR.Cause.HealthDecision>不明</CFR.Cause.HealthDecision>
+  <CFR.Cause.HealthDecisionDetail>{0}</CFR.Cause.HealthDecisionDetail>
+  <CFR.Cause.UntracedWithEvidence>不明</CFR.Cause.UntracedWithEvidence>
+  <CFR.Cause.HediffMtb>{0}による死亡</CFR.Cause.HediffMtb>
+  <CFR.Report.Entity>存在：{0}</CFR.Report.Entity>
+  <CFR.Report.Cause>死因：{0}</CFR.Report.Cause>
+  <CFR.Report.Health>死亡処理の最終段階直前の総合健康度：{0}</CFR.Report.Health>
+  <CFR.Report.Vitals>意識{0}｜痛み{1}｜健康{2}</CFR.Report.Vitals>
+  <CFR.Report.Damage>致死ダメージ：{0} {1} → {2}</CFR.Report.Damage>
+  <CFR.Report.NoDamageInfo>致死ダメージ：情報なし</CFR.Report.NoDamageInfo>
+  <CFR.Report.AssociatedHediff>関連する健康状態：{0}</CFR.Report.AssociatedHediff>
+  <CFR.Report.Source>ダメージの発生源：{0}；武器：{1}</CFR.Report.Source>
+  <CFR.Report.Downed>PawnKindのダウン時設定：強制死亡＝{0}；死亡確率の上書き＝{1}</CFR.Report.Downed>
+  <CFR.Report.Injuries>すべての負傷（部位ごとの合計）：</CFR.Report.Injuries>
+  <CFR.Report.InjuryPart>{0}：負傷{1}；HP {2}/{3}</CFR.Report.InjuryPart>
+  <CFR.Report.MoreInjuryParts>ほかに負傷部位が{0}か所。</CFR.Report.MoreInjuryParts>
+  <CFR.Report.MissingParts>欠損部位：</CFR.Report.MissingParts>
+  <CFR.Report.None>  なし</CFR.Report.None>
+  <CFR.Report.Note>負傷は死亡時の身体状態を示すものであり、すべての傷が死因とは限りません。</CFR.Report.Note>
+
+  <CFR.Dev.TriggerDamage.Label>DEV：電撃ダメージを発生</CFR.Dev.TriggerDamage.Label>
+  <CFR.Dev.TriggerDamage.Desc>このエレクトロハーベスターに接続された収容個体1体に、通常の電撃ダメージを1回与えます。バニラのElectricalBurnを使用し、基礎ダメージ合計1～3を2～4回分に等分します。使用中のプラットフォームが複数接続されている場合は、対象を選べます。</CFR.Dev.TriggerDamage.Desc>
+  <CFR.Dev.TriggerDamage.NoTarget>接続済みで収容個体が存在し、電撃ダメージを与えられるプラットフォームがありません。</CFR.Dev.TriggerDamage.NoTarget>
+  <CFR.Dev.TriggerDamage.Unavailable>バニラの電撃ダメージ範囲を取得できません。</CFR.Dev.TriggerDamage.Unavailable>
+  <CFR.Dev.TriggerDamage.Target>{0}——座標{1}の収容プラットフォーム</CFR.Dev.TriggerDamage.Target>
+  <CFR.Dev.TriggerDamage.Applied>{1}：今回の電撃の基礎ダメージ合計は{0}。</CFR.Dev.TriggerDamage.Applied>
+  <CFR.Cause.PartZero>{0}のHPが0</CFR.Cause.PartZero>
+  <CFR.Cause.PartFunction>{0}の機能喪失</CFR.Cause.PartFunction>
+  <CFR.Cause.CapacityBelowMinimum>{0}が生存に必要な値を下回った</CFR.Cause.CapacityBelowMinimum>
+  <CFR.Cause.RatkinWatch>懐中時計の仕組みによる死亡</CFR.Cause.RatkinWatch>
+  <CFR.Report.ConditionSummary>痛み{0}｜健康{1}</CFR.Report.ConditionSummary>
+  <CFR.Settings.Column>設定列{0}</CFR.Settings.Column>
+  <CFR.Settings.AddColumn>設定列を追加</CFR.Settings.AddColumn>
+  <CFR.Settings.DeleteColumnConfirm>設定列{0}を削除しますか？\n\nこの列の通知設定を削除します。所属していた種類は未割り当てになり、バニラの死亡通知を使用します。他の列の選択状態と通知設定は変わりません。\n\n発見済みの種類は削除せず、ゲーム内の存在にも影響しません。</CFR.Settings.DeleteColumnConfirm>
+  <CFR.Settings.ResetExtraColumns>さらに、第3列以降の{0}列を削除します。これらの列の通知設定は保持されません。所属していた認識済みの種類は、既定のルールに従って最初の2列に再割り当てされます。</CFR.Settings.ResetExtraColumns>
+  <CFR.Settings.SelectAll>すべて選択</CFR.Settings.SelectAll>
+  <CFR.Settings.ClearAll>すべて解除</CFR.Settings.ClearAll>
+  <CFR.Settings.SelectAllConfirm>現在認識されている全項目を設定列{0}に割り当てますか？\n\n折りたたまれたグループ内の項目と予備設定も含みます。他の列の選択はすべて解除されますが、通知方法とレターの種類は変わりません。</CFR.Settings.SelectAllConfirm>
+  <CFR.Settings.NoColumns>設定列がありません。収容中の死亡にはバニラの通知を使用します。「設定列を追加」または「リセット」で設定を作成できます。</CFR.Settings.NoColumns>
+  <CFR.Settings.HumanlikeGroup>人間と異星種族</CFR.Settings.HumanlikeGroup>
+  <CFR.Settings.HumanRace>人間とそのゼノタイプ</CFR.Settings.HumanRace>
+  <CFR.Settings.ClearDiscovery>発見記録を消去</CFR.Settings.ClearDiscovery>
+  <CFR.Settings.ClearDiscoveryConfirm>追加で発見した収容種類の記録を消去しますか？\n\nこれらの種類の個別項目と設定列への割り当てを削除します。他の設定やゲーム内の存在には影響しません。定義から直接認識される種類は保持します。\n\n対象がまだ収容プラットフォーム上にいる場合、この設定画面を閉じて開き直すと再び記録されます。再発見された種類は、その時点で対応する予備設定の所属列を引き継ぎます。</CFR.Settings.ClearDiscoveryConfirm>
+  <CFR.Settings.ClearDiscoveryOther>通常の未知の種類には「その他／未認識」の設定を使用します。</CFR.Settings.ClearDiscoveryOther>
+  <CFR.Settings.ClearDiscoveryHeldHuman>人間と異星種族には、対応するHeld Humanの設定を使用します。</CFR.Settings.ClearDiscoveryHeldHuman>
+  <CFR.Settings.ClearDiscoveryUnassigned>予備設定が未割り当てなら、再発見された種類も未割り当てのままです。</CFR.Settings.ClearDiscoveryUnassigned>
+</LanguageData>

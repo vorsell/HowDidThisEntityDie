@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <ContainmentFatalityReport.DeathReportDefaultsDef>
+    <defName>CFR_DeathReportDefaults</defName>
+    <!-- Default warning/notification selection only; this does not change death effects. -->
+    <!-- Optional mod entries are strings, so missing mods need no cross-references. -->
+    <dangerousThingDefs>
+      <li>Bulbfreak</li>
+      <li>Trispike</li>
+      <li>RA_Joker</li>
+      <li>AP_MetalStorm</li>
+    </dangerousThingDefs>
+  </ContainmentFatalityReport.DeathReportDefaultsDef>
+</Defs>

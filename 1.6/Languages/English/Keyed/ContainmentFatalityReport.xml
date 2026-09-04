@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <CFR.Settings.Title>How Did This Entity Die?</CFR.Settings.Title>
+  <CFR.Settings.GroupA>Configuration 1</CFR.Settings.GroupA>
+  <CFR.Settings.GroupB>Configuration 2</CFR.Settings.GroupB>
+  <CFR.Settings.Mode.Message>Message</CFR.Settings.Mode.Message>
+  <CFR.Settings.Mode.Letter>Letter</CFR.Settings.Mode.Letter>
+  <CFR.Settings.LetterType>Letter type: {0}</CFR.Settings.LetterType>
+  <CFR.Settings.Reset>Reset</CFR.Settings.Reset>
+  <CFR.Settings.ResetConfirm>Reset all notification configurations?\n\nRestore two columns: column 1 uses letters (Major threat) for the default dangerous entities; column 2 uses messages for all other currently recognized entries. Default settings will replace the current delivery modes, letter styles and entity assignments.\n\nDiscovered types and source expansion are preserved. Scrolling is adjusted only when outside the valid range. In-game entities are unaffected.</CFR.Settings.ResetConfirm>
+  <CFR.Settings.SourceGroupTip>{0}\nClick to expand or collapse this group in every column. Entity assignments are unchanged.</CFR.Settings.SourceGroupTip>
+  <CFR.Settings.UnknownSource>Unknown source</CFR.Settings.UnknownSource>
+  <CFR.Settings.Other>Other / unrecognized contained pawns</CFR.Settings.Other>
+  <CFR.Settings.OtherTip>Fallback for a pawn that really dies on a holding platform but has no known containment definition or Held Human category. Ordinary deaths never use this option.</CFR.Settings.OtherTip>
+  <CFR.Settings.HeldHuman>Held Human: Humans and alien races</CFR.Settings.HeldHuman>
+  <CFR.Settings.HeldHumanTip>Fallback supplied for Held Human. It includes compatible humanlike races such as HAR races. Once a concrete race is observed on a platform, it receives its own row.</CFR.Settings.HeldHumanTip>
+  <CFR.Settings.StructuralTip>Has containment support and is an anomaly entity, or a non-humanlike race explicitly requiring platform study. Study components on ordinary animals alone are not sufficient.</CFR.Settings.StructuralTip>
+  <CFR.Settings.ObservedTip>Observed on a holding platform in a loaded game.</CFR.Settings.ObservedTip>
+  <CFR.Settings.MutantTip>Mutant type: {0}\nGrouped by mutant state, not the original animal or human race. Definition support does not guarantee capture in normal gameplay.</CFR.Settings.MutantTip>
+  <CFR.Settings.EntityTip>Def: {0}\nSource: {1}\n{2}\nA warning mark denotes a known harmful on-death effect. Structural eligibility does not guarantee that the pawn can normally survive being downed.</CFR.Settings.EntityTip>
+  <CFR.Settings.Help>Help</CFR.Settings.Help>
+  <CFR.Settings.HelpText>Only replaces notifications for deaths on holding platforms; damage and death rules are unchanged. Each type belongs to at most one configuration column. Unassigned types retain the original vanilla notification conditions and content. Entries owned by another column have a gray background and cannot be edited. Dedicated support covers Anomaly, Held Human and Ratkin Anomaly+; other sources receive generic fallback support.\n\nInitialization and reset create two columns: dangerous defaults in column 1 and all other currently recognized entries in column 2. The columns are independent thereafter. New columns use messages and start empty. Deleting or clearing a column restores vanilla notifications for its entities. Select all transfers all current entries, including collapsed sources and fallback categories, into that column and clears selections elsewhere. Reset removes extra columns and restores default delivery and assignments, but preserves discovery and source expansion.\n\nEntries represent entity races or capturable mutant types, not every shambler's original race. Unknown humanlike races use Held Human's fallback; other unknown types use Other. New types are recorded when rebuilding the settings list scans occupied platforms, or when a contained entity dies. They inherit their fallback category's column, including no assignment. Existing independent entries no longer follow fallback changes.\n\nDeath-cause, injury and probability recording rules are unchanged. No per-tick scan is added. Configuration and discovery are stored in global mod settings.\n\nThe selected vanilla lethal call records death-on-downed with its actual probability, health death, or a hediff timed-death entry. Health details are read before Kill changes the body, following the vanilla deterministic check order, without re-rolling RNG or re-running potentially side-effecting custom death predicates. Trace state exists only during that call, with no pawn save data or new per-tick sampling.\n\nA single primary cause is shown: destroyed vital parts, death-on-downed, a lethal health condition, required capacity failure, the lethal injury threshold, or a known special mechanism. Paired organs are checked as a functional group; an old single-organ loss is not automatically fatal. Brain destruction does not repeat consciousness loss. Unconfirmed routes say Unknown.\n\nFatal damage is one DamageInfo supplied to the death call, not injury history or necessarily the HP actually removed. For example, the Ratkin Anomaly+ pocket-watch mechanism supplies 999 but calls death directly; brain removal is an after-effect. An unavailable packet does not mean no earlier injuries. Earlier shocks are never substituted. Vanilla shocks roll 1–3 base damage, split into 2–4 packets that may hit the same part.\n\nLetters show all injured-part totals and missing parts without a count limit. Injury severity keeps decimals; HP uses the game's rounding. Messages skip the full injury list. </CFR.Settings.HelpText>
+  <CFR.LetterType.ThreatBig>Major threat</CFR.LetterType.ThreatBig>
+  <CFR.LetterType.ThreatSmall>Minor threat</CFR.LetterType.ThreatSmall>
+  <CFR.LetterType.NegativeEvent>Negative event</CFR.LetterType.NegativeEvent>
+  <CFR.LetterType.NeutralEvent>Neutral event</CFR.LetterType.NeutralEvent>
+  <CFR.LetterType.PositiveEvent>Positive event</CFR.LetterType.PositiveEvent>
+
+  <CFR.Message>{0} died on a holding platform. Cause of death: {1}</CFR.Message>
+  <CFR.LetterTitle>Contained entity died: {0}</CFR.LetterTitle>
+  <CFR.Cause.RequiredCapacity>{0} is 0%</CFR.Cause.RequiredCapacity>
+  <CFR.Cause.LethalThreshold>Total injuries reached the lethal threshold</CFR.Cause.LethalThreshold>
+  <CFR.Cause.DownedLogic>Unknown</CFR.Cause.DownedLogic>
+  <CFR.Cause.OtherLogic>Unknown</CFR.Cause.OtherLogic>
+  <CFR.Cause.ForcedDowned>Death on downed (forced)</CFR.Cause.ForcedDowned>
+  <CFR.Cause.ChanceOnDowned>Death on downed (death chance: {0})</CFR.Cause.ChanceOnDowned>
+  <CFR.Cause.HealthDecision>Unknown</CFR.Cause.HealthDecision>
+  <CFR.Cause.HealthDecisionDetail>{0}</CFR.Cause.HealthDecisionDetail>
+  <CFR.Cause.UntracedWithEvidence>Unknown</CFR.Cause.UntracedWithEvidence>
+  <CFR.Cause.HediffMtb>Death caused by {0}</CFR.Cause.HediffMtb>
+  <CFR.Report.Entity>Entity: {0}</CFR.Report.Entity>
+  <CFR.Report.Cause>Cause of death: {0}</CFR.Report.Cause>
+  <CFR.Report.Health>Health immediately before death finalization: {0}</CFR.Report.Health>
+  <CFR.Report.Vitals>Consciousness {0} | Pain {1} | Health {2}</CFR.Report.Vitals>
+  <CFR.Report.Damage>Fatal damage: {0} {1} → {2}</CFR.Report.Damage>
+  <CFR.Report.NoDamageInfo>Fatal damage: Unavailable</CFR.Report.NoDamageInfo>
+  <CFR.Report.AssociatedHediff>Associated health condition: {0}</CFR.Report.AssociatedHediff>
+  <CFR.Report.Source>Instigator: {0}; weapon: {1}</CFR.Report.Source>
+  <CFR.Report.Downed>PawnKind downed settings: forced death = {0}; override chance = {1}</CFR.Report.Downed>
+  <CFR.Report.Injuries>All injuries (totals by part):</CFR.Report.Injuries>
+  <CFR.Report.InjuryPart>{0}: injury {1}; HP {2}/{3}</CFR.Report.InjuryPart>
+  <CFR.Report.MoreInjuryParts>{0} more injured parts.</CFR.Report.MoreInjuryParts>
+  <CFR.Report.MissingParts>Missing parts:</CFR.Report.MissingParts>
+  <CFR.Report.None>  none</CFR.Report.None>
+  <CFR.Report.Note>Injuries describe the body at death; not every injury was a cause of death.</CFR.Report.Note>
+
+  <CFR.Dev.TriggerDamage.Label>DEV: Trigger electroharvester damage</CFR.Dev.TriggerDamage.Label>
+  <CFR.Dev.TriggerDamage.Desc>Applies one normal electroharvester damage event to a linked contained pawn: vanilla ElectricalBurn with 1–3 total base damage, split equally into 2–4 packets. If several occupied platforms are linked, you can choose the target.</CFR.Dev.TriggerDamage.Desc>
+  <CFR.Dev.TriggerDamage.NoTarget>No linked, occupied holding platform is currently eligible for electroharvester damage.</CFR.Dev.TriggerDamage.NoTarget>
+  <CFR.Dev.TriggerDamage.Unavailable>The vanilla electroharvester damage range could not be resolved.</CFR.Dev.TriggerDamage.Unavailable>
+  <CFR.Dev.TriggerDamage.Target>{0} — platform at {1}</CFR.Dev.TriggerDamage.Target>
+  <CFR.Dev.TriggerDamage.Applied>{1}: this shock rolled {0} total base damage.</CFR.Dev.TriggerDamage.Applied>
+  <CFR.Cause.PartZero>{0} HP is 0</CFR.Cause.PartZero>
+  <CFR.Cause.PartFunction>Loss of {0} function</CFR.Cause.PartFunction>
+  <CFR.Cause.CapacityBelowMinimum>{0} is below the survival threshold</CFR.Cause.CapacityBelowMinimum>
+  <CFR.Cause.RatkinWatch>Death caused by the pocket-watch mechanism</CFR.Cause.RatkinWatch>
+  <CFR.Report.ConditionSummary>Pain {0} | Health {1}</CFR.Report.ConditionSummary>
+  <CFR.Settings.Column>Configuration {0}</CFR.Settings.Column>
+  <CFR.Settings.AddColumn>Add configuration</CFR.Settings.AddColumn>
+  <CFR.Settings.DeleteColumnConfirm>Delete configuration {0}?\n\nIts notification settings will be removed. Its entities will become unassigned and use vanilla death notifications. Selections and notification settings in other columns will remain unchanged.\n\nDiscovered types and in-game entities are unaffected.</CFR.Settings.DeleteColumnConfirm>
+  <CFR.Settings.ResetExtraColumns>This will also delete the {0} configuration column(s) after the first two. Their notification settings will not be retained. Their currently recognized entities will be reassigned to the first two columns using the default rules.</CFR.Settings.ResetExtraColumns>
+  <CFR.Settings.SelectAll>Select all</CFR.Settings.SelectAll>
+  <CFR.Settings.ClearAll>Clear all</CFR.Settings.ClearAll>
+  <CFR.Settings.SelectAllConfirm>Assign all currently recognized entries to configuration {0}?\n\nThis includes entries in collapsed sources and the fallback categories. All selections in other columns will be cleared, but their delivery modes and letter styles will remain unchanged.</CFR.Settings.SelectAllConfirm>
+  <CFR.Settings.NoColumns>There are no configuration columns. Contained deaths use vanilla notifications. Use Add configuration or Reset to create configurations.</CFR.Settings.NoColumns>
+  <CFR.Settings.HumanlikeGroup>Humans and alien races</CFR.Settings.HumanlikeGroup>
+  <CFR.Settings.HumanRace>Humans and their xenotypes</CFR.Settings.HumanRace>
+  <CFR.Settings.ClearDiscovery>Clear discovery records</CFR.Settings.ClearDiscovery>
+  <CFR.Settings.ClearDiscoveryConfirm>Clear records of additionally discovered containment types?\n\nTheir individual entries and column assignments will be removed. Other settings and in-game entities are unaffected. Types recognized directly from their definitions are preserved.\n\nIf these entities are still on holding platforms, closing and reopening this settings window will discover them again. They will inherit the current assignment of the applicable fallback:</CFR.Settings.ClearDiscoveryConfirm>
+  <CFR.Settings.ClearDiscoveryOther>Ordinary unknown types use the Other / unrecognized configuration.</CFR.Settings.ClearDiscoveryOther>
+  <CFR.Settings.ClearDiscoveryHeldHuman>Humans and alien races use the corresponding Held Human configuration.</CFR.Settings.ClearDiscoveryHeldHuman>
+  <CFR.Settings.ClearDiscoveryUnassigned>If that fallback is unassigned, the rediscovered type will also remain unassigned.</CFR.Settings.ClearDiscoveryUnassigned>
+</LanguageData>

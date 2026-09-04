@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ModMetaData>
+  <name>How Did This Entity Die?</name>
+  <author>Vorsel</author>
+  <packageId>Vorsel.HowDidThisEntityDie</packageId>
+  <supportedVersions>
+    <li>1.6</li>
+  </supportedVersions>
+  <modDependencies>
+    <li>
+      <packageId>brrainz.harmony</packageId>
+      <displayName>Harmony</displayName>
+      <steamWorkshopUrl>steam://url/CommunityFilePage/2009463077</steamWorkshopUrl>
+    </li>
+    <li>
+      <packageId>Ludeon.RimWorld.Anomaly</packageId>
+      <displayName>RimWorld - Anomaly</displayName>
+    </li>
+  </modDependencies>
+  <loadAfter>
+    <li>brrainz.harmony</li>
+    <li>Ludeon.RimWorld.Anomaly</li>
+  </loadAfter>
+  <description>为死亡时仍在收容平台上的实体提供更详细的死亡报告，展示可判定的死因、致死伤害、全部伤势与缺失部位，并支持定位事发地点。
+
+可按实体类型配置消息或信件通知，不改变原版的死亡机制与死亡后果。
+
+由Codex协助编写代码。
+
+Provides more detailed death reports for entities that die while still contained on holding platforms. Reports include the cause of death when identifiable, fatal damage, all injuries, and missing body parts, with an option to jump to the incident location.
+
+Configure message or letter notifications by entity type, without changing vanilla death mechanics or consequences.
+
+Code written with assistance from Codex.</description>
+</ModMetaData>

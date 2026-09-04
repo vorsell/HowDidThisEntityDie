@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <CFR.Settings.Title>更详细的收容实体死亡报告</CFR.Settings.Title>
+  <CFR.Settings.GroupA>配置列1</CFR.Settings.GroupA>
+  <CFR.Settings.GroupB>配置列2</CFR.Settings.GroupB>
+  <CFR.Settings.Mode.Message>消息</CFR.Settings.Mode.Message>
+  <CFR.Settings.Mode.Letter>信件</CFR.Settings.Mode.Letter>
+  <CFR.Settings.LetterType>信件种类：{0}</CFR.Settings.LetterType>
+  <CFR.Settings.Reset>重置</CFR.Settings.Reset>
+  <CFR.Settings.ResetConfirm>是否重置全部播报配置？\n\n将恢复为两个配置列：第1列使用信件（重大威胁）并勾选默认危险实体；第2列使用消息并勾选其余当前已识别条目。现有播报方式、信件样式和实体归属将被默认设置替代。\n\n保留已发现类型和来源展开状态；滚动位置仅在超出有效范围时调整。不影响游戏内实体。</CFR.Settings.ResetConfirm>
+  <CFR.Settings.SourceGroupTip>{0}\n点击展开或收起此分组的选项。所有配置列同步折叠，不改变实体归属。</CFR.Settings.SourceGroupTip>
+  <CFR.Settings.UnknownSource>未知来源</CFR.Settings.UnknownSource>
+  <CFR.Settings.Other>其他／未识别的已收容Pawn</CFR.Settings.Other>
+  <CFR.Settings.OtherTip>只兜底确实死在收容平台上的Pawn，但其类型既不在已知收容定义中，也不属于Held Human类别。普通死亡不会使用此项。</CFR.Settings.OtherTip>
+  <CFR.Settings.HeldHuman>Held Human：人类与外星种族</CFR.Settings.HeldHuman>
+  <CFR.Settings.HeldHumanTip>Held Human的兼容兜底，包括米莉拉等兼容的人类智能HAR种族。某个具体种族实际出现在收容平台后，会得到独立一行。</CFR.Settings.HeldHumanTip>
+  <CFR.Settings.StructuralTip>具备收容组件，且属于异象实体或明确要求平台研究的非人类智能生物。不会仅因普通动物带有研究组件就列入。</CFR.Settings.StructuralTip>
+  <CFR.Settings.ObservedTip>在已载入游戏的收容平台上实际观察到。</CFR.Settings.ObservedTip>
+  <CFR.Settings.MutantTip>变异类型：{0}\n按变异状态统一分类，不按原来的动物或人类种族分类。定义支持收容不等于正常玩法中一定能收容。</CFR.Settings.MutantTip>
+  <CFR.Settings.EntityTip>Def：{0}\n来源：{1}\n{2}\n警告标记表示已知具有有害死亡效果。定义上支持收容，不代表它在正常流程中一定能撑过倒地。</CFR.Settings.EntityTip>
+  <CFR.Settings.Help>说明</CFR.Settings.Help>
+  <CFR.Settings.HelpText>仅替换已收容实体死亡时的通知，不改变伤害或死亡规则。一个类型最多归属一个配置列，使用该列的播报设置；未分配类型保留原版通知条件和内容。其他列占用的条目显示灰底且不可编辑。支持范围为异象、Held Human和Ratkin Anomaly+，其他来源提供通用兜底。\n\n首次初始化和重置只建立两列，危险实体归第1列，其余当前已识别条目归第2列。此后不再自动反选。新增列默认使用消息且没有勾选；删除或清空列后，其实体恢复原版通知。全选会将当前所有条目转入本列并清空其他列的勾选，包含折叠来源和兜底项。重置会删除额外列并恢复默认播报设置与归属，但保留发现记录和来源展开状态。\n\n列表按实体和可收容变异类型建立；蹒跚怪不按原种族逐一列出。未识别的人类使用Held Human兜底，其他未知类型使用“其他”。重建设置列表时扫描当前收容平台，或在收容死亡时补记新类型。新发现类型继承适用兜底项的所属列，包括未分配状态。已有独立类型不再随兜底项改变。\n\n死亡原因、伤势和概率记录规则不变；没有新增逐tick扫描，配置和发现记录保存在全局Mod设置中。\n\n在原版已选定的致死调用中记录倒地死亡及其实际概率、健康致死和健康状态的定时致死入口。健康细节在Kill()改变身体之前，按原版确定性判定顺序读取，不重抽随机数，也不重复调用可能有副作用的自定义死亡判定。记录只在这次调用内有效，不写入实体存档，没有新增逐tick采样。\n\n每次给出一个主死因：关键部件HP为0、倒地死亡、健康状态致死、必需能力丧失、累计伤势达到致死阈值，或已知特殊机制。成对器官需检查整个功能组；旧的单侧损毁不能直接当死因。大脑损毁时不重复报告意识归零。无法确认的路径显示“未知”。\n\n“致死伤害”指死亡调用提供的一份DamageInfo，不是完整受伤历史，也不保证数值等于实际扣掉的HP。例如Ratkin Anomaly+怀表机制传入999，但直接调用死亡；大脑移除是后续效果。未提供伤害信息不代表此前未受伤，也不会拿上一次汲电补上。原版汲电基础总伤害1～3，均分成2～4份；部位可重复命中。\n\n信件完整列出各部位的伤势合计和缺失部位，不限条数。伤势保留小数，HP使用游戏取整值。消息不整理完整伤势清单。</CFR.Settings.HelpText>
+  <CFR.LetterType.ThreatBig>重大威胁</CFR.LetterType.ThreatBig>
+  <CFR.LetterType.ThreatSmall>小型威胁</CFR.LetterType.ThreatSmall>
+  <CFR.LetterType.NegativeEvent>负面事件</CFR.LetterType.NegativeEvent>
+  <CFR.LetterType.NeutralEvent>中性事件</CFR.LetterType.NeutralEvent>
+  <CFR.LetterType.PositiveEvent>正面事件</CFR.LetterType.PositiveEvent>
+
+  <CFR.Message>{0}死亡于收容平台，死因：{1}</CFR.Message>
+  <CFR.LetterTitle>已收容实体死亡：{0}</CFR.LetterTitle>
+  <CFR.Cause.RequiredCapacity>{0}为 0%</CFR.Cause.RequiredCapacity>
+  <CFR.Cause.LethalThreshold>累计伤势达到致死阈值</CFR.Cause.LethalThreshold>
+  <CFR.Cause.DownedLogic>未知</CFR.Cause.DownedLogic>
+  <CFR.Cause.OtherLogic>未知</CFR.Cause.OtherLogic>
+  <CFR.Cause.ForcedDowned>倒地死亡（强制）</CFR.Cause.ForcedDowned>
+  <CFR.Cause.ChanceOnDowned>倒地死亡（死亡概率：{0}）</CFR.Cause.ChanceOnDowned>
+  <CFR.Cause.HealthDecision>未知</CFR.Cause.HealthDecision>
+  <CFR.Cause.HealthDecisionDetail>{0}</CFR.Cause.HealthDecisionDetail>
+  <CFR.Cause.UntracedWithEvidence>未知</CFR.Cause.UntracedWithEvidence>
+  <CFR.Cause.HediffMtb>{0}致死</CFR.Cause.HediffMtb>
+  <CFR.Report.Entity>实体：{0}</CFR.Report.Entity>
+  <CFR.Report.Cause>死因：{0}</CFR.Report.Cause>
+  <CFR.Report.Health>进入死亡收尾前的总健康度：{0}</CFR.Report.Health>
+  <CFR.Report.Vitals>意识 {0}｜疼痛 {1}｜总健康 {2}</CFR.Report.Vitals>
+  <CFR.Report.Damage>致死伤害：{0} {1} → {2}</CFR.Report.Damage>
+  <CFR.Report.NoDamageInfo>致死伤害：无可用信息</CFR.Report.NoDamageInfo>
+  <CFR.Report.AssociatedHediff>关联健康状态：{0}</CFR.Report.AssociatedHediff>
+  <CFR.Report.Source>伤害来源：{0}；武器：{1}</CFR.Report.Source>
+  <CFR.Report.Downed>PawnKind 倒地设置：强制死亡 = {0}；覆盖概率 = {1}</CFR.Report.Downed>
+  <CFR.Report.Injuries>全部伤势（按部位合计）：</CFR.Report.Injuries>
+  <CFR.Report.InjuryPart>{0}：伤势 {1}；HP {2}/{3}</CFR.Report.InjuryPart>
+  <CFR.Report.MoreInjuryParts>另有 {0} 个受伤部位。</CFR.Report.MoreInjuryParts>
+  <CFR.Report.MissingParts>缺失部位：</CFR.Report.MissingParts>
+  <CFR.Report.None>  无</CFR.Report.None>
+  <CFR.Report.Note>伤势为死亡时的身体状态，不代表每个伤口都是死因。</CFR.Report.Note>
+
+  <CFR.Dev.TriggerDamage.Label>DEV：触发一次汲电伤害</CFR.Dev.TriggerDamage.Label>
+  <CFR.Dev.TriggerDamage.Desc>立即对连接到此汲电器的一名已收容 Pawn 触发一次正常汲电伤害。使用原版 ElectricalBurn：基础总伤害 1～3 点，均分成随机 2～4 份命中部位。若连接了多个有收容物的平台，可选择目标。</CFR.Dev.TriggerDamage.Desc>
+  <CFR.Dev.TriggerDamage.NoTarget>当前没有与此汲电器连接且具有收容物的可用平台。</CFR.Dev.TriggerDamage.NoTarget>
+  <CFR.Dev.TriggerDamage.Unavailable>无法解析原版汲电伤害范围。</CFR.Dev.TriggerDamage.Unavailable>
+  <CFR.Dev.TriggerDamage.Target>{0}——位于 {1} 的收容平台</CFR.Dev.TriggerDamage.Target>
+  <CFR.Dev.TriggerDamage.Applied>{1}：本次汲电基础总伤害 {0}。</CFR.Dev.TriggerDamage.Applied>
+  <CFR.Cause.PartZero>{0} HP 为 0</CFR.Cause.PartZero>
+  <CFR.Cause.PartFunction>{0}功能丧失</CFR.Cause.PartFunction>
+  <CFR.Cause.CapacityBelowMinimum>{0}低于生存阈值</CFR.Cause.CapacityBelowMinimum>
+  <CFR.Cause.RatkinWatch>怀表机制致死</CFR.Cause.RatkinWatch>
+  <CFR.Report.ConditionSummary>疼痛 {0} | 总健康 {1}</CFR.Report.ConditionSummary>
+  <CFR.Settings.Column>配置列{0}</CFR.Settings.Column>
+  <CFR.Settings.AddColumn>新增配置列</CFR.Settings.AddColumn>
+  <CFR.Settings.DeleteColumnConfirm>是否删除配置列{0}？\n\n此列的播报设置将被删除，其中的实体将变为未分配，使用原版死亡通知。其他配置列的勾选和播报设置保持不变。\n\n不删除已发现类型，也不影响游戏内实体。</CFR.Settings.DeleteColumnConfirm>
+  <CFR.Settings.ResetExtraColumns>另外，将删除第3列及之后的{0}个配置列，这些列的播报设置不会保留。其中当前已识别的实体将按默认规则重新分配到前两列。</CFR.Settings.ResetExtraColumns>
+  <CFR.Settings.SelectAll>选中所有</CFR.Settings.SelectAll>
+  <CFR.Settings.ClearAll>清空所有</CFR.Settings.ClearAll>
+  <CFR.Settings.SelectAllConfirm>是否将全部当前已识别条目分配到配置列{0}？\n\n包含折叠来源内的条目和兜底选项。其他配置列的勾选将全部清空，但播报方式和信件样式保持不变。</CFR.Settings.SelectAllConfirm>
+  <CFR.Settings.NoColumns>当前没有配置列。已收容实体死亡时使用原版通知。可点击“新增配置列”或“重置”建立配置。</CFR.Settings.NoColumns>
+  <CFR.Settings.HumanlikeGroup>人类与外星种族</CFR.Settings.HumanlikeGroup>
+  <CFR.Settings.HumanRace>人类及其异种</CFR.Settings.HumanRace>
+  <CFR.Settings.ClearDiscovery>清除发现记录</CFR.Settings.ClearDiscovery>
+  <CFR.Settings.ClearDiscoveryConfirm>是否清除额外发现的收容类型记录？\n\n将清除这些类型的独立选项及其所属配置列记录。其他设置保持不变，不影响游戏内实体；直接根据定义识别的类型不受影响。\n\n若相关实体仍在收容平台上，关闭并重新进入设置界面后，会重新记录，并按当时适用的兜底选项分配：</CFR.Settings.ClearDiscoveryConfirm>
+  <CFR.Settings.ClearDiscoveryOther>普通未知类型使用“其他／未识别”配置。</CFR.Settings.ClearDiscoveryOther>
+  <CFR.Settings.ClearDiscoveryHeldHuman>人类与外星种族使用对应的Held Human配置。</CFR.Settings.ClearDiscoveryHeldHuman>
+  <CFR.Settings.ClearDiscoveryUnassigned>兜底选项未分配到任何列时，重新发现的类型也保持未分配。</CFR.Settings.ClearDiscoveryUnassigned>
+</LanguageData>

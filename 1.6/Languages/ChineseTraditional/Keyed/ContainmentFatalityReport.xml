@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <CFR.Settings.Title>更詳細的收容實體死亡報告</CFR.Settings.Title>
+  <CFR.Settings.GroupA>設定欄1</CFR.Settings.GroupA>
+  <CFR.Settings.GroupB>設定欄2</CFR.Settings.GroupB>
+  <CFR.Settings.Mode.Message>訊息</CFR.Settings.Mode.Message>
+  <CFR.Settings.Mode.Letter>信件</CFR.Settings.Mode.Letter>
+  <CFR.Settings.LetterType>信件類型：{0}</CFR.Settings.LetterType>
+  <CFR.Settings.Reset>重設</CFR.Settings.Reset>
+  <CFR.Settings.ResetConfirm>是否重設全部通知設定？\n\n將恢復為兩個設定欄：第1欄使用信件（大型威脅）並勾選預設危險實體；第2欄使用訊息並勾選其餘目前已辨識項目。現有通知方式、信件類型與實體歸屬將被預設設定取代。\n\n保留已發現類型與群組展開狀態；捲動位置僅在超出有效範圍時調整。不影響遊戲內實體。</CFR.Settings.ResetConfirm>
+  <CFR.Settings.SourceGroupTip>{0}\n點擊可展開或收合此群組。所有設定欄同步收合，不改變實體歸屬。</CFR.Settings.SourceGroupTip>
+  <CFR.Settings.UnknownSource>未知來源</CFR.Settings.UnknownSource>
+  <CFR.Settings.Other>其他／未辨識的已收容個體</CFR.Settings.Other>
+  <CFR.Settings.OtherTip>備用規則：僅適用於確實死在收容平台上的個體，且其類型既不在已知收容定義中，也不屬於Held Human類別。一般的非收容死亡不會使用此項。</CFR.Settings.OtherTip>
+  <CFR.Settings.HeldHuman>Held Human：人類與外星種族</CFR.Settings.HeldHuman>
+  <CFR.Settings.HeldHumanTip>Held Human的相容性備用規則，包含相容的人形HAR種族。某個具體種族實際出現在收容平台後，會獲得獨立項目。</CFR.Settings.HeldHumanTip>
+  <CFR.Settings.StructuralTip>具備收容元件，且屬於異象實體，或明確要求平台研究的非人形種族。普通動物僅有研究元件並不足以列入。</CFR.Settings.StructuralTip>
+  <CFR.Settings.ObservedTip>在已載入遊戲的收容平台上實際觀察到。</CFR.Settings.ObservedTip>
+  <CFR.Settings.MutantTip>變異類型：{0}\n依變異狀態統一分類，不依原本的動物或人類種族分類。定義上支援收容，不代表正常遊玩時一定能收容。</CFR.Settings.MutantTip>
+  <CFR.Settings.EntityTip>Def：{0}\n來源：{1}\n{2}\n警告標記表示已知具有有害的死亡效果。定義上支援收容，不代表它在正常流程中一定能撐過倒地。</CFR.Settings.EntityTip>
+  <CFR.Settings.Help>說明</CFR.Settings.Help>
+  <CFR.Settings.HelpText>僅替換收容平台上的死亡通知，不改變傷害或死亡規則。一個類型最多歸屬一個設定欄，使用該欄的通知設定；未分配的類型保留原版通知條件與內容。已歸屬其他欄的項目會顯示灰底且無法編輯。專門支援異邪、Held Human與Ratkin Anomaly+，其他來源使用通用備用規則。\n\n首次初始化與重設只建立兩欄，預設危險類型歸第1欄，其餘目前已辨識項目歸第2欄。之後各欄獨立，不再自動反向選取。新增欄預設使用訊息，且沒有勾選任何項目；刪除或清空欄後，其實體恢復原版通知。「全部選取」會將目前所有項目轉入本欄，並清空其他欄的勾選，包含收合群組內的項目與備用類別。重設會刪除額外欄並恢復預設通知設定與歸屬，但保留發現紀錄與群組展開狀態。\n\n清單依實體種族與可收容的變異類型建立；蹣步者不依原種族逐一列出。未辨識的人形種族使用Held Human備用規則，其他未知類型使用「其他」。重建設定清單時會檢查目前使用中的收容平台，或在收容個體死亡時補記新類型。新發現類型會繼承適用備用類別的所屬欄，包括未分配狀態。已有獨立項目的類型不再隨備用類別變更。\n\n死因、傷勢與機率的紀錄規則不變；沒有新增逐tick掃描。設定與發現紀錄儲存在全域Mod設定中。\n\n在原版已選定的致死呼叫中，記錄倒地死亡及其實際機率、健康狀態致死，以及Hediff隨時間觸發死亡的處理路徑。健康細節在Kill()改變身體之前，依原版確定性的判定順序讀取，不重新抽取亂數，也不重複呼叫可能有副作用的自訂死亡判定。追蹤紀錄僅在這次呼叫期間有效，不寫入個體存檔，也沒有新增逐tick取樣。\n\n每次顯示一個主要死因：關鍵部位HP為0、倒地死亡、健康狀態致死、必要能力喪失、累積傷勢達到致死門檻，或已知特殊機制。成對器官須檢查整個功能群組；先前已存在的單側器官損毀不能直接視為死因。大腦損毀時不重複報告意識歸零。無法確認的路徑顯示「未知」。\n\n「致死傷害」指死亡呼叫提供的一份DamageInfo，不是完整受傷歷程，也不保證數值等於實際扣除的HP。例如Ratkin Anomaly+的懷錶機制傳入999，但直接呼叫死亡；移除大腦是後續效果。沒有傷害資訊不代表先前未曾受傷，也不會拿上一次電擊的資料補上。原版電力收集器的基礎總傷害為1～3，平均分成2～4份；同一部位可能重複命中。\n\n信件完整列出各受傷部位的傷勢合計與缺失部位，不限項目數。傷勢保留小數，HP使用遊戲的取整值。訊息不整理完整傷勢清單。</CFR.Settings.HelpText>
+  <CFR.LetterType.ThreatBig>大型威脅</CFR.LetterType.ThreatBig>
+  <CFR.LetterType.ThreatSmall>小型威脅</CFR.LetterType.ThreatSmall>
+  <CFR.LetterType.NegativeEvent>負面事件</CFR.LetterType.NegativeEvent>
+  <CFR.LetterType.NeutralEvent>中性事件</CFR.LetterType.NeutralEvent>
+  <CFR.LetterType.PositiveEvent>正面事件</CFR.LetterType.PositiveEvent>
+
+  <CFR.Message>{0}死亡於收容平台，死因：{1}</CFR.Message>
+  <CFR.LetterTitle>已收容實體死亡：{0}</CFR.LetterTitle>
+  <CFR.Cause.RequiredCapacity>{0}為0%</CFR.Cause.RequiredCapacity>
+  <CFR.Cause.LethalThreshold>累積傷勢達到致死門檻</CFR.Cause.LethalThreshold>
+  <CFR.Cause.DownedLogic>未知</CFR.Cause.DownedLogic>
+  <CFR.Cause.OtherLogic>未知</CFR.Cause.OtherLogic>
+  <CFR.Cause.ForcedDowned>倒地死亡（強制）</CFR.Cause.ForcedDowned>
+  <CFR.Cause.ChanceOnDowned>倒地死亡（死亡機率：{0}）</CFR.Cause.ChanceOnDowned>
+  <CFR.Cause.HealthDecision>未知</CFR.Cause.HealthDecision>
+  <CFR.Cause.HealthDecisionDetail>{0}</CFR.Cause.HealthDecisionDetail>
+  <CFR.Cause.UntracedWithEvidence>未知</CFR.Cause.UntracedWithEvidence>
+  <CFR.Cause.HediffMtb>{0}致死</CFR.Cause.HediffMtb>
+  <CFR.Report.Entity>實體：{0}</CFR.Report.Entity>
+  <CFR.Report.Cause>死因：{0}</CFR.Report.Cause>
+  <CFR.Report.Health>進入死亡收尾處理前的總健康度：{0}</CFR.Report.Health>
+  <CFR.Report.Vitals>意識{0}｜傷痛{1}｜總健康{2}</CFR.Report.Vitals>
+  <CFR.Report.Damage>致死傷害：{0} {1} → {2}</CFR.Report.Damage>
+  <CFR.Report.NoDamageInfo>致死傷害：無可用資訊</CFR.Report.NoDamageInfo>
+  <CFR.Report.AssociatedHediff>相關健康狀態：{0}</CFR.Report.AssociatedHediff>
+  <CFR.Report.Source>傷害來源：{0}；武器：{1}</CFR.Report.Source>
+  <CFR.Report.Downed>PawnKind倒地設定：強制死亡＝{0}；覆寫機率＝{1}</CFR.Report.Downed>
+  <CFR.Report.Injuries>全部傷勢（依部位合計）：</CFR.Report.Injuries>
+  <CFR.Report.InjuryPart>{0}：傷勢{1}；HP {2}/{3}</CFR.Report.InjuryPart>
+  <CFR.Report.MoreInjuryParts>另有{0}個受傷部位。</CFR.Report.MoreInjuryParts>
+  <CFR.Report.MissingParts>缺失部位：</CFR.Report.MissingParts>
+  <CFR.Report.None>  無</CFR.Report.None>
+  <CFR.Report.Note>傷勢描述的是死亡時的身體狀態，不代表每個傷口都是死因。</CFR.Report.Note>
+
+  <CFR.Dev.TriggerDamage.Label>DEV：觸發一次電擊傷害</CFR.Dev.TriggerDamage.Label>
+  <CFR.Dev.TriggerDamage.Desc>立即對連接此電力收集器的一名已收容個體觸發一次正常電擊傷害。使用原版ElectricalBurn：基礎總傷害1～3點，平均分成隨機2～4份命中部位。若連接多個已有收容物的平台，可選擇目標。</CFR.Dev.TriggerDamage.Desc>
+  <CFR.Dev.TriggerDamage.NoTarget>目前沒有與此電力收集器連接且具有收容物的可用平台。</CFR.Dev.TriggerDamage.NoTarget>
+  <CFR.Dev.TriggerDamage.Unavailable>無法取得原版電擊傷害範圍。</CFR.Dev.TriggerDamage.Unavailable>
+  <CFR.Dev.TriggerDamage.Target>{0}——位於{1}的收容平台</CFR.Dev.TriggerDamage.Target>
+  <CFR.Dev.TriggerDamage.Applied>{1}：本次電擊基礎總傷害為{0}。</CFR.Dev.TriggerDamage.Applied>
+  <CFR.Cause.PartZero>{0}的HP為0</CFR.Cause.PartZero>
+  <CFR.Cause.PartFunction>{0}功能喪失</CFR.Cause.PartFunction>
+  <CFR.Cause.CapacityBelowMinimum>{0}低於生存門檻</CFR.Cause.CapacityBelowMinimum>
+  <CFR.Cause.RatkinWatch>懷錶機制致死</CFR.Cause.RatkinWatch>
+  <CFR.Report.ConditionSummary>傷痛{0}｜總健康{1}</CFR.Report.ConditionSummary>
+  <CFR.Settings.Column>設定欄{0}</CFR.Settings.Column>
+  <CFR.Settings.AddColumn>新增設定欄</CFR.Settings.AddColumn>
+  <CFR.Settings.DeleteColumnConfirm>是否刪除設定欄{0}？\n\n此欄的通知設定將被刪除，其中的實體將變為未分配，使用原版死亡通知。其他設定欄的勾選與通知設定保持不變。\n\n不刪除已發現類型，也不影響遊戲內實體。</CFR.Settings.DeleteColumnConfirm>
+  <CFR.Settings.ResetExtraColumns>另外，將刪除第3欄及之後的{0}個設定欄，這些欄的通知設定不會保留。其中目前已辨識的實體將依預設規則重新分配到前兩欄。</CFR.Settings.ResetExtraColumns>
+  <CFR.Settings.SelectAll>全部選取</CFR.Settings.SelectAll>
+  <CFR.Settings.ClearAll>全部取消</CFR.Settings.ClearAll>
+  <CFR.Settings.SelectAllConfirm>是否將目前已辨識的全部項目分配到設定欄{0}？\n\n包含收合群組內的項目與備用類別。其他設定欄的勾選將全部清空，但通知方式與信件類型保持不變。</CFR.Settings.SelectAllConfirm>
+  <CFR.Settings.NoColumns>目前沒有設定欄。已收容實體死亡時使用原版通知。可點擊「新增設定欄」或「重設」建立設定。</CFR.Settings.NoColumns>
+  <CFR.Settings.HumanlikeGroup>人類與外星種族</CFR.Settings.HumanlikeGroup>
+  <CFR.Settings.HumanRace>人類（含異種人）</CFR.Settings.HumanRace>
+  <CFR.Settings.ClearDiscovery>清除發現紀錄</CFR.Settings.ClearDiscovery>
+  <CFR.Settings.ClearDiscoveryConfirm>是否清除額外發現的收容類型紀錄？\n\n將清除這些類型的獨立項目及其所屬設定欄紀錄。其他設定保持不變，不影響遊戲內實體；直接依定義辨識的類型不受影響。\n\n若相關實體仍在收容平台上，關閉並重新進入設定介面後，會重新記錄，並依當時適用的備用選項分配：</CFR.Settings.ClearDiscoveryConfirm>
+  <CFR.Settings.ClearDiscoveryOther>一般未知類型使用「其他／未辨識」設定。</CFR.Settings.ClearDiscoveryOther>
+  <CFR.Settings.ClearDiscoveryHeldHuman>人類與外星種族使用對應的Held Human設定。</CFR.Settings.ClearDiscoveryHeldHuman>
+  <CFR.Settings.ClearDiscoveryUnassigned>備用選項未分配至任何欄時，重新發現的類型也維持未分配。</CFR.Settings.ClearDiscoveryUnassigned>
+</LanguageData>
