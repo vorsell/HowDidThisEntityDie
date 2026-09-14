@@ -21,20 +21,50 @@ namespace ContainmentFatalityReport
         }
     }
 
+    public sealed class PartHealthWarningRule : IExposable
+    {
+        public string id;
+        public string thingDef;
+        public string bodyPartDef;
+        public float threshold = 1f;
+        public DeliveryMode mode = DeliveryMode.Message;
+        public string letterDef = "NegativeEvent";
+
+        public void ExposeData()
+        {
+            Scribe_Values.Look(ref id, "id");
+            Scribe_Values.Look(ref thingDef, "thingDef");
+            Scribe_Values.Look(ref bodyPartDef, "bodyPartDef");
+            Scribe_Values.Look(ref threshold, "threshold", 1f);
+            Scribe_Values.Look(ref mode, "mode", DeliveryMode.Message);
+            Scribe_Values.Look(ref letterDef, "letterDef", "NegativeEvent");
+        }
+    }
+
     public sealed class ContainmentFatalityReportSettings : ModSettings
     {
+        public bool containmentHintsEnabled = true;
         public List<NotificationColumn> columns = new List<NotificationColumn>();
+        public List<PartHealthWarningRule> partHealthWarnings = new List<PartHealthWarningRule>();
         public List<string> observedThingDefs = new List<string>();
         public List<string> observedMutantDefs = new List<string>();
         private Dictionary<string, string> entityColumns = new Dictionary<string, string>(StringComparer.Ordinal);
+        private Dictionary<string, string> markColumns = new Dictionary<string, string>(StringComparer.Ordinal);
+        private Dictionary<string, string> usefulMarkIds = new Dictionary<string, string>(StringComparer.Ordinal);
         private Dictionary<string, NotificationColumn> columnsById;
         private List<string> assignmentKeys;
         private List<string> assignmentValues;
+        private List<string> markAssignmentKeys;
+        private List<string> markAssignmentValues;
+        private List<string> usefulMarkFingerprintKeys;
+        private List<string> usefulMarkFingerprintValues;
         private int schemaVersion;
         // Remember a type even when it has no column. Absence from entityColumns
         // alone cannot distinguish a new type from an intentionally unchecked one.
         private List<string> registeredTypeKeys = new List<string>();
         private HashSet<string> registeredTypeSet;
+        private bool partHealthWarningsInitialized;
+        private Dictionary<string, List<PartHealthWarningRule>> warningsByThingDef;
 
         // Read the old keys only for one-time migration. Never interpret an empty
         // new-format column list as fresh settings: zero columns is intentional.
@@ -51,6 +81,9 @@ namespace ContainmentFatalityReport
         public override void ExposeData()
         {
             Scribe_Values.Look(ref schemaVersion, "columnSchemaVersion", 0);
+            Scribe_Values.Look(ref containmentHintsEnabled, "containmentHintsEnabled", true);
+            Scribe_Values.Look(ref partHealthWarningsInitialized, "partHealthWarningsInitialized", false);
+            Scribe_Collections.Look(ref partHealthWarnings, "partHealthWarnings", LookMode.Deep);
             Scribe_Collections.Look(ref observedThingDefs, "observedThingDefs", LookMode.Value);
             Scribe_Collections.Look(ref observedMutantDefs, "observedMutantDefs", LookMode.Value);
             Scribe_Collections.Look(ref registeredTypeKeys, "registeredTypeKeys", LookMode.Value);
@@ -69,6 +102,10 @@ namespace ContainmentFatalityReport
                 Scribe_Collections.Look(ref columns, "notificationColumns", LookMode.Deep);
                 Scribe_Collections.Look(ref entityColumns, "entityColumns", LookMode.Value, LookMode.Value,
                     ref assignmentKeys, ref assignmentValues);
+                Scribe_Collections.Look(ref markColumns, "markColumns", LookMode.Value, LookMode.Value,
+                    ref markAssignmentKeys, ref markAssignmentValues);
+                Scribe_Collections.Look(ref usefulMarkIds, "usefulMarkIds", LookMode.Value, LookMode.Value,
+                    ref usefulMarkFingerprintKeys, ref usefulMarkFingerprintValues);
             }
             if (Scribe.mode == LoadSaveMode.PostLoadInit)
                 NormalizeLoadedData();
@@ -82,7 +119,10 @@ namespace ContainmentFatalityReport
             registeredTypeKeys = CleanNames(registeredTypeKeys);
             registeredTypeSet = null;
             columns = columns ?? new List<NotificationColumn>();
+            partHealthWarnings = partHealthWarnings ?? new List<PartHealthWarningRule>();
             entityColumns = entityColumns ?? new Dictionary<string, string>();
+            markColumns = markColumns ?? new Dictionary<string, string>();
+            usefulMarkIds = usefulMarkIds ?? new Dictionary<string, string>();
             RememberExistingTypes(Enumerable.Empty<ContainmentCandidate>());
             var ids = new HashSet<string>(StringComparer.Ordinal);
             columns.RemoveAll(column => column == null || string.IsNullOrEmpty(column.id) || !ids.Add(column.id));
@@ -91,12 +131,33 @@ namespace ContainmentFatalityReport
                 if (!Enum.IsDefined(typeof(DeliveryMode), column.mode)) column.mode = DeliveryMode.Message;
                 if (!ContainmentSettingsLayout.IsCommonLetterType(column.letterDef)) column.letterDef = "NegativeEvent";
             }
+            var warningIds = new HashSet<string>(StringComparer.Ordinal);
+            partHealthWarnings.RemoveAll(rule => rule == null || string.IsNullOrEmpty(rule.thingDef) ||
+                string.IsNullOrEmpty(rule.bodyPartDef));
+            foreach (PartHealthWarningRule rule in partHealthWarnings)
+            {
+                if (string.IsNullOrEmpty(rule.id) || !warningIds.Add(rule.id))
+                {
+                    rule.id = Guid.NewGuid().ToString("N");
+                    warningIds.Add(rule.id);
+                }
+                if (float.IsNaN(rule.threshold) || float.IsInfinity(rule.threshold)) rule.threshold = 1f;
+                rule.threshold = Math.Max(0f, rule.threshold);
+                if (!Enum.IsDefined(typeof(DeliveryMode), rule.mode)) rule.mode = DeliveryMode.Message;
+                if (!ContainmentSettingsLayout.IsCommonLetterType(rule.letterDef)) rule.letterDef = "NegativeEvent";
+            }
             // Missing/deleted column IDs fall back to vanilla; never reassign them
             // by visual index. Keep names of temporarily unloaded entity mods.
             foreach (string key in entityColumns.Keys.ToList())
                 if (string.IsNullOrEmpty(key) || entityColumns[key] == null || !ids.Contains(entityColumns[key]))
                     entityColumns.Remove(key);
+            foreach (string key in markColumns.Keys.ToList())
+                if (string.IsNullOrEmpty(key) || markColumns[key] == null || !ids.Contains(markColumns[key]))
+                    markColumns.Remove(key);
+            foreach (string key in usefulMarkIds.Keys.ToList())
+                if (string.IsNullOrEmpty(key) || string.IsNullOrEmpty(usefulMarkIds[key])) usefulMarkIds.Remove(key);
             columnsById = null;
+            warningsByThingDef = null;
         }
 
         private static List<string> CleanNames(List<string> values)
@@ -107,9 +168,10 @@ namespace ContainmentFatalityReport
         internal bool EnsureInitialized(IEnumerable<ContainmentCandidate> candidates)
         {
             List<ContainmentCandidate> known = candidates.ToList();
+            bool warningChanged = EnsurePartHealthWarningsInitialized();
             if (Initialized)
             {
-                bool changed = false;
+                bool changed = warningChanged;
                 NotificationColumn fallback = ColumnFor(ContainmentRegistry.OtherKey);
                 foreach (ContainmentCandidate candidate in known)
                     changed |= InheritNewType(candidate.Key, fallback != null ? fallback.id : null);
@@ -125,7 +187,7 @@ namespace ContainmentFatalityReport
             }
             if (!legacyLoaded)
             {
-                ResetToDefaults(known);
+                ResetDeathReportsToDefaults(known);
                 return true;
             }
 
@@ -148,6 +210,74 @@ namespace ContainmentFatalityReport
             legacyLoaded = false;
             NormalizeLoadedData();
             return true;
+        }
+
+        private bool EnsurePartHealthWarningsInitialized()
+        {
+            if (partHealthWarningsInitialized) return false;
+            ResetPartHealthWarnings();
+            return true;
+        }
+
+        internal void ResetPartHealthWarnings()
+        {
+            partHealthWarnings.Clear();
+            partHealthWarnings.Add(new PartHealthWarningRule
+            {
+                id = Guid.NewGuid().ToString("N"),
+                thingDef = "Bulbfreak",
+                bodyPartDef = "Brain",
+                threshold = 1f,
+                mode = DeliveryMode.Message,
+                letterDef = "NegativeEvent"
+            });
+            partHealthWarningsInitialized = true;
+            warningsByThingDef = null;
+        }
+
+        internal void ResetContainmentAlertsToDefaults()
+        {
+            containmentHintsEnabled = true;
+            ResetPartHealthWarnings();
+        }
+
+        internal bool HasPartHealthWarnings
+        {
+            get { return partHealthWarnings != null && partHealthWarnings.Count > 0; }
+        }
+
+        internal List<PartHealthWarningRule> WarningsFor(ThingDef thingDef)
+        {
+            if (thingDef == null || !HasPartHealthWarnings) return null;
+            if (warningsByThingDef == null)
+                warningsByThingDef = partHealthWarnings.GroupBy(rule => rule.thingDef, StringComparer.Ordinal)
+                    .ToDictionary(group => group.Key, group => group.ToList(), StringComparer.Ordinal);
+            List<PartHealthWarningRule> result;
+            return warningsByThingDef.TryGetValue(thingDef.defName, out result) ? result : null;
+        }
+
+        internal PartHealthWarningRule AddPartHealthWarning(string thingDef, string bodyPartDef)
+        {
+            var rule = new PartHealthWarningRule
+            {
+                id = Guid.NewGuid().ToString("N"),
+                thingDef = thingDef,
+                bodyPartDef = bodyPartDef
+            };
+            partHealthWarnings.Add(rule);
+            warningsByThingDef = null;
+            return rule;
+        }
+
+        internal void RemovePartHealthWarning(string id)
+        {
+            partHealthWarnings.RemoveAll(rule => rule.id == id);
+            warningsByThingDef = null;
+        }
+
+        internal void InvalidatePartHealthWarnings()
+        {
+            warningsByThingDef = null;
         }
 
         private bool RememberType(string key)
@@ -191,6 +321,22 @@ namespace ContainmentFatalityReport
             return key != null && entityColumns.TryGetValue(key, out id) ? FindColumn(id) : null;
         }
 
+        internal NotificationColumn ColumnForMark(string key)
+        {
+            string id;
+            return key != null && markColumns.TryGetValue(key, out id) ? FindColumn(id) : null;
+        }
+
+        internal bool HasMarkedDeathMonitoring
+        {
+            get { return markColumns.Count > 0; }
+        }
+
+        internal IEnumerable<string> ConfiguredMarkKeys
+        {
+            get { return markColumns.Keys; }
+        }
+
         internal bool TrySetSelected(string key, string columnId, bool selected)
         {
             if (string.IsNullOrEmpty(key) || FindColumn(columnId) == null) return false;
@@ -200,6 +346,28 @@ namespace ContainmentFatalityReport
             if (selected) entityColumns[key] = columnId;
             else entityColumns.Remove(key);
             return true;
+        }
+
+        internal bool TrySetMarkSelected(string key, string columnId, bool selected)
+        {
+            if (string.IsNullOrEmpty(key) || FindColumn(columnId) == null) return false;
+            NotificationColumn current = ColumnForMark(key);
+            if (current != null && current.id != columnId) return false;
+            if (selected) markColumns[key] = columnId;
+            else markColumns.Remove(key);
+            return true;
+        }
+
+        internal string GetOrCreateUsefulMarkId(string fingerprint)
+        {
+            if (string.IsNullOrEmpty(fingerprint)) return null;
+            string id;
+            if (!usefulMarkIds.TryGetValue(fingerprint, out id))
+            {
+                id = Guid.NewGuid().ToString("N");
+                usefulMarkIds[fingerprint] = id;
+            }
+            return id;
         }
 
         internal void InheritAssignment(string key, string columnId)
@@ -220,6 +388,8 @@ namespace ContainmentFatalityReport
         {
             foreach (string key in entityColumns.Where(pair => pair.Value == columnId).Select(pair => pair.Key).ToList())
                 entityColumns.Remove(key);
+            foreach (string key in markColumns.Where(pair => pair.Value == columnId).Select(pair => pair.Key).ToList())
+                markColumns.Remove(key);
         }
 
         internal void ClearDiscovery(ISet<string> definitionKeys)
@@ -247,20 +417,26 @@ namespace ContainmentFatalityReport
 
         internal bool WouldClaimOtherColumns(string columnId)
         {
-            return entityColumns.Values.Any(value => value != columnId);
+            return entityColumns.Values.Any(value => value != columnId) ||
+                markColumns.Values.Any(value => value != columnId);
         }
 
-        internal void SelectAll(string columnId, IEnumerable<ContainmentCandidate> candidates)
+        internal void SelectAll(string columnId, IEnumerable<ContainmentCandidate> candidates,
+            IEnumerable<string> markKeys = null)
         {
             if (FindColumn(columnId) == null) return;
             entityColumns.Clear();
+            markColumns.Clear();
             foreach (ContainmentCandidate candidate in candidates) InheritAssignment(candidate.Key, columnId);
+            if (markKeys != null)
+                foreach (string key in markKeys.Where(key => !string.IsNullOrEmpty(key))) markColumns[key] = columnId;
         }
 
-        internal void ResetToDefaults(IEnumerable<ContainmentCandidate> candidates)
+        internal void ResetDeathReportsToDefaults(IEnumerable<ContainmentCandidate> candidates)
         {
             columns.Clear();
             entityColumns.Clear();
+            markColumns.Clear();
             NotificationColumn first = AddColumn(DeliveryMode.Letter, "ThreatBig");
             NotificationColumn second = AddColumn();
             foreach (ContainmentCandidate candidate in candidates)

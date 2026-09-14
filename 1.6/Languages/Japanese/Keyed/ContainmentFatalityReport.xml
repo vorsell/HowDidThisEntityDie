@@ -1,5 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LanguageData>
+  <CFR.Settings.Group.PartWarnings>収容個体アラート</CFR.Settings.Group.PartWarnings>
+  <CFR.Settings.Group.DeathReports>死亡レポート設定</CFR.Settings.Group.DeathReports>
+  <CFR.Settings.PartWarnings.Entity>存在</CFR.Settings.PartWarnings.Entity>
+  <CFR.Settings.PartWarnings.BodyPart>身体部位</CFR.Settings.PartWarnings.BodyPart>
+  <CFR.Settings.PartWarnings.Threshold>HPしきい値</CFR.Settings.PartWarnings.Threshold>
+  <CFR.Settings.PartWarnings.Notification>通知方法</CFR.Settings.PartWarnings.Notification>
+  <CFR.Settings.PartWarnings.Add>警告を追加</CFR.Settings.PartWarnings.Add>
+  <CFR.Settings.PartWarnings.Empty>部位HP警告は設定されていません。</CFR.Settings.PartWarnings.Empty>
+  <CFR.Settings.PartWarnings.DeleteConfirm>{0}の{1}に対する警告を削除しますか？</CFR.Settings.PartWarnings.DeleteConfirm>
+  <CFR.Settings.PartWarnings.NoAvailableRule>利用可能な存在と身体部位の組み合わせはすべて設定済みです。</CFR.Settings.PartWarnings.NoAvailableRule>
+  <CFR.Settings.ContainmentHints.Enabled>収容個体アラートを有効にする</CFR.Settings.ContainmentHints.Enabled>
+  <CFR.Settings.ContainmentHints.Description>収容中のPawnがダメージを受けた後にのみ、設定された身体部位を確認します。無効にするとダメージ処理へのパッチを完全に解除しますが、設定済みのアラート規則は保持されます。</CFR.Settings.ContainmentHints.Description>
+  <CFR.Settings.ResetPartWarnings>収容個体アラートをリセットしますか？\n\n収容個体アラートを有効にし、現在のアラート規則をすべて消去して、次の既定規則を復元します：\n    {0}の脳のHPが1以下になった時点で、メッセージで通知する。\n\n死亡レポート設定、発見記録、ゲーム内の個体には影響しません。</CFR.Settings.ResetPartWarnings>
+  <CFR.PartWarning.Title>部位HP警告：{0}</CFR.PartWarning.Title>
+  <CFR.PartWarning.Body>{0}の{1}はダメージを受けてHPが{2}となり、HPしきい値{3}以下に達しました。</CFR.PartWarning.Body>
   <CFR.Settings.Title>この存在はなぜ死んだ？</CFR.Settings.Title>
   <CFR.Settings.GroupA>設定列1</CFR.Settings.GroupA>
   <CFR.Settings.GroupB>設定列2</CFR.Settings.GroupB>
@@ -7,7 +22,7 @@
   <CFR.Settings.Mode.Letter>レター</CFR.Settings.Mode.Letter>
   <CFR.Settings.LetterType>レターの種類：{0}</CFR.Settings.LetterType>
   <CFR.Settings.Reset>リセット</CFR.Settings.Reset>
-  <CFR.Settings.ResetConfirm>通知設定をすべてリセットしますか？\n\n設定列を2列に戻します。第1列は既定の危険な存在を選択し、レター（重大な脅威）で通知します。第2列は現在認識されている残りの項目を選択し、メッセージで通知します。現在の通知方法、レターの種類、各項目の割り当ては既定の設定に置き換わります。\n\n発見済みの種類とグループの展開状態は保持します。スクロール位置は有効範囲外の場合のみ調整します。ゲーム内の存在には影響しません。</CFR.Settings.ResetConfirm>
+  <CFR.Settings.ResetConfirm>死亡レポート設定をリセットしますか？\n\n設定列を2列に戻します：\n    第1列は既定の危険な存在を選択し、レター（重大な脅威）で通知します。\n    第2列は現在認識されている残りの項目を選択し、メッセージで通知します。\n\n現在の通知方法、レターの種類、各項目の割り当て、マーク監視は既定の設定に置き換わります。収容個体アラート、発見済みの種類、グループの展開状態は保持されます。ゲーム内の個体には影響しません。</CFR.Settings.ResetConfirm>
   <CFR.Settings.SourceGroupTip>{0}\nクリックすると、すべての列でこのグループを展開・折りたたみします。各項目の割り当ては変わりません。</CFR.Settings.SourceGroupTip>
   <CFR.Settings.UnknownSource>出典不明</CFR.Settings.UnknownSource>
   <CFR.Settings.Other>その他／未認識の収容個体</CFR.Settings.Other>
@@ -80,4 +95,12 @@
   <CFR.Settings.ClearDiscoveryOther>通常の未知の種類には「その他／未認識」の設定を使用します。</CFR.Settings.ClearDiscoveryOther>
   <CFR.Settings.ClearDiscoveryHeldHuman>人間と異星種族には、対応するHeld Humanの設定を使用します。</CFR.Settings.ClearDiscoveryHeldHuman>
   <CFR.Settings.ClearDiscoveryUnassigned>予備設定が未割り当てなら、再発見された種類も未割り当てのままです。</CFR.Settings.ClearDiscoveryUnassigned>
+  <CFR.Report.Pawn>名前：{0}</CFR.Report.Pawn>
+  <CFR.Report.Marks>マーク：{0}</CFR.Report.Marks>
+  <CFR.Settings.Mark.Help>Useful MarksまたはMark That Pawnが有効な場合、監視するマークを下から選択できます。マークは既定では無効です。Pawnが死亡すると、設定済みのマークのうち最も優先度が高い通知を使用します。</CFR.Settings.Mark.Help>
+  <CFR.Settings.Mark.Unnamed>名前のないマーク</CFR.Settings.Mark.Unnamed>
+  <CFR.Settings.Mark.FactionIcon>派閥アイコン</CFR.Settings.Mark.FactionIcon>
+  <CFR.Settings.Mark.IdeologyIcon>イデオロギーアイコン</CFR.Settings.Mark.IdeologyIcon>
+  <CFR.MarkedDeath.Title>マーク対象の{0}が死亡</CFR.MarkedDeath.Title>
+  <CFR.MarkedDeath.Body>マーク対象の{0}が死亡しました。死因：{1}</CFR.MarkedDeath.Body>
 </LanguageData>

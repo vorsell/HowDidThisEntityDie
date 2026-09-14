@@ -45,6 +45,10 @@
     <Compile Include="ContainmentRegistry.cs" />
     <Compile Include="DeathReportDefaultsDef.cs" />
     <Compile Include="ContainmentSettingsLayout.cs" />
+    <Compile Include="PartHealthWarning.cs" />
+    <Compile Include="ContainmentHintPatchController.cs" />
+    <Compile Include="MarkedPawnMonitoring.cs" />
+    <Compile Include="MarkedPawnRules.cs" />
     <Compile Include="DeathReport.cs" />
     <Compile Include="HealthDeathCause.cs" />
     <Compile Include="DeathDecisionTrace.cs" />

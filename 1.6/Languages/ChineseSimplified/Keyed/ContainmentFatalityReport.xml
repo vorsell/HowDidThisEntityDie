@@ -1,5 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LanguageData>
+  <CFR.Settings.Group.PartWarnings>收容实体提示</CFR.Settings.Group.PartWarnings>
+  <CFR.Settings.Group.DeathReports>死亡报告配置</CFR.Settings.Group.DeathReports>
+  <CFR.Settings.PartWarnings.Entity>实体</CFR.Settings.PartWarnings.Entity>
+  <CFR.Settings.PartWarnings.BodyPart>身体部位</CFR.Settings.PartWarnings.BodyPart>
+  <CFR.Settings.PartWarnings.Threshold>HP阈值</CFR.Settings.PartWarnings.Threshold>
+  <CFR.Settings.PartWarnings.Notification>播报方式</CFR.Settings.PartWarnings.Notification>
+  <CFR.Settings.PartWarnings.Add>新增预警</CFR.Settings.PartWarnings.Add>
+  <CFR.Settings.PartWarnings.Empty>尚未配置部位血量预警。</CFR.Settings.PartWarnings.Empty>
+  <CFR.Settings.PartWarnings.DeleteConfirm>是否删除{0}的{1}预警？</CFR.Settings.PartWarnings.DeleteConfirm>
+  <CFR.Settings.PartWarnings.NoAvailableRule>所有可用的实体与身体部位组合都已配置预警。</CFR.Settings.PartWarnings.NoAvailableRule>
+  <CFR.Settings.ContainmentHints.Enabled>启用收容实体提示</CFR.Settings.ContainmentHints.Enabled>
+  <CFR.Settings.ContainmentHints.Description>仅在已收容Pawn受到伤害后检查已配置的身体部位。关闭后会完整卸载受伤入口补丁，但保留现有提示规则。</CFR.Settings.ContainmentHints.Description>
+  <CFR.Settings.ResetPartWarnings>是否重置收容实体提示？\n\n将重新启用收容实体提示，清除现有预警规则，并恢复以下默认规则：\n    {0}的大脑HP达到1或更低时，使用消息播报。\n\n死亡报告配置、发现记录和游戏内实体不受影响。</CFR.Settings.ResetPartWarnings>
+  <CFR.PartWarning.Title>部位血量预警：{0}</CFR.PartWarning.Title>
+  <CFR.PartWarning.Body>{0}的{1}在受伤后HP为{2}，已达到或低于HP阈值{3}。</CFR.PartWarning.Body>
   <CFR.Settings.Title>更详细的收容实体死亡报告</CFR.Settings.Title>
   <CFR.Settings.GroupA>配置列1</CFR.Settings.GroupA>
   <CFR.Settings.GroupB>配置列2</CFR.Settings.GroupB>
@@ -7,7 +22,7 @@
   <CFR.Settings.Mode.Letter>信件</CFR.Settings.Mode.Letter>
   <CFR.Settings.LetterType>信件种类：{0}</CFR.Settings.LetterType>
   <CFR.Settings.Reset>重置</CFR.Settings.Reset>
-  <CFR.Settings.ResetConfirm>是否重置全部播报配置？\n\n将恢复为两个配置列：第1列使用信件（重大威胁）并勾选默认危险实体；第2列使用消息并勾选其余当前已识别条目。现有播报方式、信件样式和实体归属将被默认设置替代。\n\n保留已发现类型和来源展开状态；滚动位置仅在超出有效范围时调整。不影响游戏内实体。</CFR.Settings.ResetConfirm>
+  <CFR.Settings.ResetConfirm>是否重置死亡报告配置？\n\n将恢复为两个配置列：\n    第1列使用信件（重大威胁），并选择默认危险实体。\n    第2列使用消息，并选择其余当前已识别条目。\n\n现有播报方式、信件样式、实体归属和标记监控将被默认设置替代。收容实体提示、已发现类型和来源展开状态保持不变，不影响游戏内实体。</CFR.Settings.ResetConfirm>
   <CFR.Settings.SourceGroupTip>{0}\n点击展开或收起此分组的选项。所有配置列同步折叠，不改变实体归属。</CFR.Settings.SourceGroupTip>
   <CFR.Settings.UnknownSource>未知来源</CFR.Settings.UnknownSource>
   <CFR.Settings.Other>其他／未识别的已收容Pawn</CFR.Settings.Other>
@@ -39,6 +54,8 @@
   <CFR.Cause.UntracedWithEvidence>未知</CFR.Cause.UntracedWithEvidence>
   <CFR.Cause.HediffMtb>{0}致死</CFR.Cause.HediffMtb>
   <CFR.Report.Entity>实体：{0}</CFR.Report.Entity>
+  <CFR.Report.Pawn>名称：{0}</CFR.Report.Pawn>
+  <CFR.Report.Marks>标记：{0}</CFR.Report.Marks>
   <CFR.Report.Cause>死因：{0}</CFR.Report.Cause>
   <CFR.Report.Health>进入死亡收尾前的总健康度：{0}</CFR.Report.Health>
   <CFR.Report.Vitals>意识 {0}｜疼痛 {1}｜总健康 {2}</CFR.Report.Vitals>
@@ -60,18 +77,18 @@
   <CFR.Dev.TriggerDamage.Unavailable>无法解析原版汲电伤害范围。</CFR.Dev.TriggerDamage.Unavailable>
   <CFR.Dev.TriggerDamage.Target>{0}——位于 {1} 的收容平台</CFR.Dev.TriggerDamage.Target>
   <CFR.Dev.TriggerDamage.Applied>{1}：本次汲电基础总伤害 {0}。</CFR.Dev.TriggerDamage.Applied>
-  <CFR.Cause.PartZero>{0} HP 为 0</CFR.Cause.PartZero>
+  <CFR.Cause.PartZero>{0}HP为0</CFR.Cause.PartZero>
   <CFR.Cause.PartFunction>{0}功能丧失</CFR.Cause.PartFunction>
   <CFR.Cause.CapacityBelowMinimum>{0}低于生存阈值</CFR.Cause.CapacityBelowMinimum>
   <CFR.Cause.RatkinWatch>怀表机制致死</CFR.Cause.RatkinWatch>
   <CFR.Report.ConditionSummary>疼痛 {0} | 总健康 {1}</CFR.Report.ConditionSummary>
   <CFR.Settings.Column>配置列{0}</CFR.Settings.Column>
   <CFR.Settings.AddColumn>新增配置列</CFR.Settings.AddColumn>
-  <CFR.Settings.DeleteColumnConfirm>是否删除配置列{0}？\n\n此列的播报设置将被删除，其中的实体将变为未分配，使用原版死亡通知。其他配置列的勾选和播报设置保持不变。\n\n不删除已发现类型，也不影响游戏内实体。</CFR.Settings.DeleteColumnConfirm>
+  <CFR.Settings.DeleteColumnConfirm>是否删除配置列{0}？\n\n此列的播报设置将被删除，其中的实体将变为未分配并使用原版死亡通知，标记监控将被关闭。其他配置列的勾选和播报设置保持不变。\n\n不删除已发现类型，也不影响游戏内实体。</CFR.Settings.DeleteColumnConfirm>
   <CFR.Settings.ResetExtraColumns>另外，将删除第3列及之后的{0}个配置列，这些列的播报设置不会保留。其中当前已识别的实体将按默认规则重新分配到前两列。</CFR.Settings.ResetExtraColumns>
   <CFR.Settings.SelectAll>选中所有</CFR.Settings.SelectAll>
   <CFR.Settings.ClearAll>清空所有</CFR.Settings.ClearAll>
-  <CFR.Settings.SelectAllConfirm>是否将全部当前已识别条目分配到配置列{0}？\n\n包含折叠来源内的条目和兜底选项。其他配置列的勾选将全部清空，但播报方式和信件样式保持不变。</CFR.Settings.SelectAllConfirm>
+  <CFR.Settings.SelectAllConfirm>是否将全部当前已识别条目分配到配置列{0}？\n\n包含当前可用标记、折叠来源内的条目和兜底选项。其他配置列的勾选将全部清空，但播报方式和信件样式保持不变。</CFR.Settings.SelectAllConfirm>
   <CFR.Settings.NoColumns>当前没有配置列。已收容实体死亡时使用原版通知。可点击“新增配置列”或“重置”建立配置。</CFR.Settings.NoColumns>
   <CFR.Settings.HumanlikeGroup>人类与外星种族</CFR.Settings.HumanlikeGroup>
   <CFR.Settings.HumanRace>人类及其异种</CFR.Settings.HumanRace>
@@ -80,4 +97,10 @@
   <CFR.Settings.ClearDiscoveryOther>普通未知类型使用“其他／未识别”配置。</CFR.Settings.ClearDiscoveryOther>
   <CFR.Settings.ClearDiscoveryHeldHuman>人类与外星种族使用对应的Held Human配置。</CFR.Settings.ClearDiscoveryHeldHuman>
   <CFR.Settings.ClearDiscoveryUnassigned>兜底选项未分配到任何列时，重新发现的类型也保持未分配。</CFR.Settings.ClearDiscoveryUnassigned>
+  <CFR.Settings.Mark.Help>启用Useful Marks或Mark That Pawn后，可在下方选择需要监控的标记。标记默认关闭；Pawn死亡时采用已配置标记中的最高优先级通知。</CFR.Settings.Mark.Help>
+  <CFR.Settings.Mark.Unnamed>未命名标记</CFR.Settings.Mark.Unnamed>
+  <CFR.Settings.Mark.FactionIcon>阵营图标</CFR.Settings.Mark.FactionIcon>
+  <CFR.Settings.Mark.IdeologyIcon>文化图标</CFR.Settings.Mark.IdeologyIcon>
+  <CFR.MarkedDeath.Title>被标记的{0}死亡</CFR.MarkedDeath.Title>
+  <CFR.MarkedDeath.Body>被标记的{0}死亡，死因：{1}</CFR.MarkedDeath.Body>
 </LanguageData>

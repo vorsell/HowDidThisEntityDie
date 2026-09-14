@@ -20,16 +20,22 @@
   <loadAfter>
     <li>brrainz.harmony</li>
     <li>Ludeon.RimWorld.Anomaly</li>
+    <li>Andromeda.UsefulMarks</li>
+    <li>Mlie.MarkThatPawn</li>
   </loadAfter>
-  <description>为死亡时仍在收容平台上的实体提供更详细的死亡报告，展示可判定的死因、致死伤害、全部伤势与缺失部位，并支持定位事发地点。
+  <description>为死亡时仍在收容平台上的实体提供可配置的死亡通知和更详细的报告。可判定时说明死因；详细信件还会记录致死伤害、死亡前状态、全部伤势与缺失部位，并支持定位事发地点。
 
-可按实体类型配置消息或信件通知，不改变原版的死亡机制与死亡后果。
+可为已收容实体设置身体部位HP阈值提示，也可按实体类型配置死亡消息或信件。启用Useful Marks或Mark That Pawn时，可以选择监控指定标记，并按已配置通知中的最高优先级报告被标记Pawn的死亡。
+
+提示仅在已收容Pawn受到伤害时检查，死亡报告仅在死亡时处理，不进行逐tick扫描，也不改变原版的伤害、死亡机制与死亡后果。
 
 由Codex协助编写代码。
 
-Provides more detailed death reports for entities that die while still contained on holding platforms. Reports include the cause of death when identifiable, fatal damage, all injuries, and missing body parts, with an option to jump to the incident location.
+Provides configurable death notifications and more detailed reports for entities that die while still contained on holding platforms. When identifiable, the cause of death is shown; detailed letters also record fatal damage, pre-death condition, all injuries, and missing body parts, with an option to jump to the incident location.
 
-Configure message or letter notifications by entity type, without changing vanilla death mechanics or consequences.
+Configure body-part HP threshold alerts for contained entities, plus message or letter death notifications by entity type. When Useful Marks or Mark That Pawn is active, selected marks can be monitored, and a marked pawn's death uses the highest-priority configured notification.
+
+Alerts are checked only when a contained pawn takes damage, and death reports are processed only on death. No per-tick scan is added, and vanilla damage, death mechanics, and consequences are unchanged.
 
 Code written with assistance from Codex.</description>
 </ModMetaData>

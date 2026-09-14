@@ -1,5 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LanguageData>
+  <CFR.Settings.Group.PartWarnings>Contained entity alerts</CFR.Settings.Group.PartWarnings>
+  <CFR.Settings.Group.DeathReports>Death report settings</CFR.Settings.Group.DeathReports>
+  <CFR.Settings.PartWarnings.Entity>Entity</CFR.Settings.PartWarnings.Entity>
+  <CFR.Settings.PartWarnings.BodyPart>Body part</CFR.Settings.PartWarnings.BodyPart>
+  <CFR.Settings.PartWarnings.Threshold>HP threshold</CFR.Settings.PartWarnings.Threshold>
+  <CFR.Settings.PartWarnings.Notification>Notification</CFR.Settings.PartWarnings.Notification>
+  <CFR.Settings.PartWarnings.Add>Add warning</CFR.Settings.PartWarnings.Add>
+  <CFR.Settings.PartWarnings.Empty>No part health warnings are configured.</CFR.Settings.PartWarnings.Empty>
+  <CFR.Settings.PartWarnings.DeleteConfirm>Delete the warning for {0}'s {1}?</CFR.Settings.PartWarnings.DeleteConfirm>
+  <CFR.Settings.PartWarnings.NoAvailableRule>Every available entity/body-part pair already has a warning.</CFR.Settings.PartWarnings.NoAvailableRule>
+  <CFR.Settings.ContainmentHints.Enabled>Enable contained entity alerts</CFR.Settings.ContainmentHints.Enabled>
+  <CFR.Settings.ContainmentHints.Description>Checks configured body parts only after a contained pawn takes damage. Turning this off unpatches the damage entry point completely; saved alert rules are retained.</CFR.Settings.ContainmentHints.Description>
+  <CFR.Settings.ResetPartWarnings>Reset contained entity alerts?\n\nContained entity alerts will be enabled, all existing alert rules will be cleared, and the following default rule will be restored:\n    Send a message when {0}'s brain reaches 1 HP or lower.\n\nDeath report settings, discovery records, and in-game entities are unaffected.</CFR.Settings.ResetPartWarnings>
+  <CFR.PartWarning.Title>Part health warning: {0}</CFR.PartWarning.Title>
+  <CFR.PartWarning.Body>{0}'s {1} has {2} HP after taking damage, at or below the warning threshold of {3} HP.</CFR.PartWarning.Body>
   <CFR.Settings.Title>How Did This Entity Die?</CFR.Settings.Title>
   <CFR.Settings.GroupA>Configuration 1</CFR.Settings.GroupA>
   <CFR.Settings.GroupB>Configuration 2</CFR.Settings.GroupB>
@@ -7,7 +22,7 @@
   <CFR.Settings.Mode.Letter>Letter</CFR.Settings.Mode.Letter>
   <CFR.Settings.LetterType>Letter type: {0}</CFR.Settings.LetterType>
   <CFR.Settings.Reset>Reset</CFR.Settings.Reset>
-  <CFR.Settings.ResetConfirm>Reset all notification configurations?\n\nRestore two columns: column 1 uses letters (Major threat) for the default dangerous entities; column 2 uses messages for all other currently recognized entries. Default settings will replace the current delivery modes, letter styles and entity assignments.\n\nDiscovered types and source expansion are preserved. Scrolling is adjusted only when outside the valid range. In-game entities are unaffected.</CFR.Settings.ResetConfirm>
+  <CFR.Settings.ResetConfirm>Reset death report settings?\n\nTwo configuration columns will be restored:\n    Column 1 sends Major threat letters for the default dangerous entities.\n    Column 2 sends messages for all other currently recognized entries.\n\nThe current delivery modes, letter styles, entity assignments, and mark monitoring will be replaced with defaults. Contained entity alerts, discovered types, and source expansion are preserved. In-game entities are unaffected.</CFR.Settings.ResetConfirm>
   <CFR.Settings.SourceGroupTip>{0}\nClick to expand or collapse this group in every column. Entity assignments are unchanged.</CFR.Settings.SourceGroupTip>
   <CFR.Settings.UnknownSource>Unknown source</CFR.Settings.UnknownSource>
   <CFR.Settings.Other>Other / unrecognized contained pawns</CFR.Settings.Other>
@@ -39,6 +54,8 @@
   <CFR.Cause.UntracedWithEvidence>Unknown</CFR.Cause.UntracedWithEvidence>
   <CFR.Cause.HediffMtb>Death caused by {0}</CFR.Cause.HediffMtb>
   <CFR.Report.Entity>Entity: {0}</CFR.Report.Entity>
+  <CFR.Report.Pawn>Name: {0}</CFR.Report.Pawn>
+  <CFR.Report.Marks>Marks: {0}</CFR.Report.Marks>
   <CFR.Report.Cause>Cause of death: {0}</CFR.Report.Cause>
   <CFR.Report.Health>Health immediately before death finalization: {0}</CFR.Report.Health>
   <CFR.Report.Vitals>Consciousness {0} | Pain {1} | Health {2}</CFR.Report.Vitals>
@@ -67,11 +84,11 @@
   <CFR.Report.ConditionSummary>Pain {0} | Health {1}</CFR.Report.ConditionSummary>
   <CFR.Settings.Column>Configuration {0}</CFR.Settings.Column>
   <CFR.Settings.AddColumn>Add configuration</CFR.Settings.AddColumn>
-  <CFR.Settings.DeleteColumnConfirm>Delete configuration {0}?\n\nIts notification settings will be removed. Its entities will become unassigned and use vanilla death notifications. Selections and notification settings in other columns will remain unchanged.\n\nDiscovered types and in-game entities are unaffected.</CFR.Settings.DeleteColumnConfirm>
+  <CFR.Settings.DeleteColumnConfirm>Delete configuration {0}?\n\nIts notification settings will be removed. Its entities will become unassigned and use vanilla death notifications; its monitored marks will be disabled. Selections and notification settings in other columns will remain unchanged.\n\nDiscovered types and in-game entities are unaffected.</CFR.Settings.DeleteColumnConfirm>
   <CFR.Settings.ResetExtraColumns>This will also delete the {0} configuration column(s) after the first two. Their notification settings will not be retained. Their currently recognized entities will be reassigned to the first two columns using the default rules.</CFR.Settings.ResetExtraColumns>
   <CFR.Settings.SelectAll>Select all</CFR.Settings.SelectAll>
   <CFR.Settings.ClearAll>Clear all</CFR.Settings.ClearAll>
-  <CFR.Settings.SelectAllConfirm>Assign all currently recognized entries to configuration {0}?\n\nThis includes entries in collapsed sources and the fallback categories. All selections in other columns will be cleared, but their delivery modes and letter styles will remain unchanged.</CFR.Settings.SelectAllConfirm>
+  <CFR.Settings.SelectAllConfirm>Assign all currently recognized entries to configuration {0}?\n\nThis includes available marks, entries in collapsed sources and fallback categories. All selections in other columns will be cleared, but their delivery modes and letter styles will remain unchanged.</CFR.Settings.SelectAllConfirm>
   <CFR.Settings.NoColumns>There are no configuration columns. Contained deaths use vanilla notifications. Use Add configuration or Reset to create configurations.</CFR.Settings.NoColumns>
   <CFR.Settings.HumanlikeGroup>Humans and alien races</CFR.Settings.HumanlikeGroup>
   <CFR.Settings.HumanRace>Humans and their xenotypes</CFR.Settings.HumanRace>
@@ -80,4 +97,10 @@
   <CFR.Settings.ClearDiscoveryOther>Ordinary unknown types use the Other / unrecognized configuration.</CFR.Settings.ClearDiscoveryOther>
   <CFR.Settings.ClearDiscoveryHeldHuman>Humans and alien races use the corresponding Held Human configuration.</CFR.Settings.ClearDiscoveryHeldHuman>
   <CFR.Settings.ClearDiscoveryUnassigned>If that fallback is unassigned, the rediscovered type will also remain unassigned.</CFR.Settings.ClearDiscoveryUnassigned>
+  <CFR.Settings.Mark.Help>Optional Useful Marks and Mark That Pawn monitoring appears below. Marks start disabled; a marked pawn uses the highest-priority configured notification when it dies.</CFR.Settings.Mark.Help>
+  <CFR.Settings.Mark.Unnamed>Unnamed mark</CFR.Settings.Mark.Unnamed>
+  <CFR.Settings.Mark.FactionIcon>Faction icon</CFR.Settings.Mark.FactionIcon>
+  <CFR.Settings.Mark.IdeologyIcon>Ideology icon</CFR.Settings.Mark.IdeologyIcon>
+  <CFR.MarkedDeath.Title>Marked pawn died: {0}</CFR.MarkedDeath.Title>
+  <CFR.MarkedDeath.Body>Marked pawn {0} died. Cause of death: {1}</CFR.MarkedDeath.Body>
 </LanguageData>

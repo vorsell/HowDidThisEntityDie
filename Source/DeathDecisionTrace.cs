@@ -50,16 +50,24 @@ namespace ContainmentFatalityReport
                 previousHediff = currentHediff;
                 previousHealthCause = currentHealthCause;
                 Pawn pawn = thing as Pawn;
-                Building_HoldingPlatform platform = pawn != null ? pawn.ParentHolder as Building_HoldingPlatform : null;
                 // Preserve an outer decision if a deathless pawn's forced brain removal
                 // recursively enters the health-death path for the same pawn.
-                if (pawn != null && platform != null && platform.HeldPawn == pawn && currentPawn != pawn)
+                Building_HoldingPlatform platform = pawn != null ? pawn.ParentHolder as Building_HoldingPlatform : null;
+                bool contained = pawn != null && platform != null && platform.HeldPawn == pawn;
+                bool monitorMarks = ContainmentFatalityReportMod.Settings != null &&
+                    ContainmentFatalityReportMod.Settings.HasMarkedDeathMonitoring;
+                if (pawn != null && currentPawn != pawn && (contained || monitorMarks))
                 {
                     currentPawn = pawn;
                     currentKind = kind;
                     currentChance = chance;
                     currentHediff = culprit;
-                    currentHealthCause = kind == DeathDecisionKind.Health ? HealthDeathCause.CaptureSafely(pawn, damage) : null;
+                    // Detailed health reconstruction is still deferred unless this
+                    // is a contained pawn. Mark monitoring performs it only after a
+                    // configured mark actually matches in Pawn.Kill's prefix.
+                    currentHealthCause = kind == DeathDecisionKind.Health && contained
+                        ? HealthDeathCause.CaptureSafely(pawn, damage)
+                        : null;
                 }
             }
 

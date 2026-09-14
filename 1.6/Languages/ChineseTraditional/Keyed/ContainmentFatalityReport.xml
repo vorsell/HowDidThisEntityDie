@@ -1,5 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LanguageData>
+  <CFR.Settings.Group.PartWarnings>收容實體提示</CFR.Settings.Group.PartWarnings>
+  <CFR.Settings.Group.DeathReports>死亡報告設定</CFR.Settings.Group.DeathReports>
+  <CFR.Settings.PartWarnings.Entity>實體</CFR.Settings.PartWarnings.Entity>
+  <CFR.Settings.PartWarnings.BodyPart>身體部位</CFR.Settings.PartWarnings.BodyPart>
+  <CFR.Settings.PartWarnings.Threshold>HP閾值</CFR.Settings.PartWarnings.Threshold>
+  <CFR.Settings.PartWarnings.Notification>通知方式</CFR.Settings.PartWarnings.Notification>
+  <CFR.Settings.PartWarnings.Add>新增預警</CFR.Settings.PartWarnings.Add>
+  <CFR.Settings.PartWarnings.Empty>尚未設定部位生命值預警。</CFR.Settings.PartWarnings.Empty>
+  <CFR.Settings.PartWarnings.DeleteConfirm>是否刪除{0}的{1}預警？</CFR.Settings.PartWarnings.DeleteConfirm>
+  <CFR.Settings.PartWarnings.NoAvailableRule>所有可用的實體與身體部位組合都已設定預警。</CFR.Settings.PartWarnings.NoAvailableRule>
+  <CFR.Settings.ContainmentHints.Enabled>啟用收容實體提示</CFR.Settings.ContainmentHints.Enabled>
+  <CFR.Settings.ContainmentHints.Description>僅在已收容個體受到傷害後檢查已設定的身體部位。關閉後會完全解除傷害入口補丁，但保留現有提示規則。</CFR.Settings.ContainmentHints.Description>
+  <CFR.Settings.ResetPartWarnings>是否重設收容實體提示？\n\n將重新啟用收容實體提示，清除現有預警規則，並恢復以下預設規則：\n    {0}的大腦HP達到1或更低時，以訊息通知。\n\n死亡報告設定、發現紀錄與遊戲內實體不受影響。</CFR.Settings.ResetPartWarnings>
+  <CFR.PartWarning.Title>部位生命值預警：{0}</CFR.PartWarning.Title>
+  <CFR.PartWarning.Body>{0}的{1}在受傷後HP為{2}，已達到或低於HP閾值{3}。</CFR.PartWarning.Body>
   <CFR.Settings.Title>更詳細的收容實體死亡報告</CFR.Settings.Title>
   <CFR.Settings.GroupA>設定欄1</CFR.Settings.GroupA>
   <CFR.Settings.GroupB>設定欄2</CFR.Settings.GroupB>
@@ -7,7 +22,7 @@
   <CFR.Settings.Mode.Letter>信件</CFR.Settings.Mode.Letter>
   <CFR.Settings.LetterType>信件類型：{0}</CFR.Settings.LetterType>
   <CFR.Settings.Reset>重設</CFR.Settings.Reset>
-  <CFR.Settings.ResetConfirm>是否重設全部通知設定？\n\n將恢復為兩個設定欄：第1欄使用信件（大型威脅）並勾選預設危險實體；第2欄使用訊息並勾選其餘目前已辨識項目。現有通知方式、信件類型與實體歸屬將被預設設定取代。\n\n保留已發現類型與群組展開狀態；捲動位置僅在超出有效範圍時調整。不影響遊戲內實體。</CFR.Settings.ResetConfirm>
+  <CFR.Settings.ResetConfirm>是否重設死亡報告設定？\n\n將恢復為兩個設定欄：\n    第1欄使用信件（大型威脅），並選取預設危險實體。\n    第2欄使用訊息，並選取其餘目前已辨識項目。\n\n現有通知方式、信件類型、實體歸屬與標記監控將被預設設定取代。收容實體提示、已發現類型與群組展開狀態保持不變，不影響遊戲內實體。</CFR.Settings.ResetConfirm>
   <CFR.Settings.SourceGroupTip>{0}\n點擊可展開或收合此群組。所有設定欄同步收合，不改變實體歸屬。</CFR.Settings.SourceGroupTip>
   <CFR.Settings.UnknownSource>未知來源</CFR.Settings.UnknownSource>
   <CFR.Settings.Other>其他／未辨識的已收容個體</CFR.Settings.Other>
@@ -80,4 +95,12 @@
   <CFR.Settings.ClearDiscoveryOther>一般未知類型使用「其他／未辨識」設定。</CFR.Settings.ClearDiscoveryOther>
   <CFR.Settings.ClearDiscoveryHeldHuman>人類與外星種族使用對應的Held Human設定。</CFR.Settings.ClearDiscoveryHeldHuman>
   <CFR.Settings.ClearDiscoveryUnassigned>備用選項未分配至任何欄時，重新發現的類型也維持未分配。</CFR.Settings.ClearDiscoveryUnassigned>
+  <CFR.Report.Pawn>名稱：{0}</CFR.Report.Pawn>
+  <CFR.Report.Marks>標記：{0}</CFR.Report.Marks>
+  <CFR.Settings.Mark.Help>啟用Useful Marks或Mark That Pawn後，可在下方選擇要監控的標記。標記預設關閉；Pawn死亡時採用已設定標記中優先級最高的通知。</CFR.Settings.Mark.Help>
+  <CFR.Settings.Mark.Unnamed>未命名標記</CFR.Settings.Mark.Unnamed>
+  <CFR.Settings.Mark.FactionIcon>派系圖示</CFR.Settings.Mark.FactionIcon>
+  <CFR.Settings.Mark.IdeologyIcon>文化圖示</CFR.Settings.Mark.IdeologyIcon>
+  <CFR.MarkedDeath.Title>被標記的{0}死亡</CFR.MarkedDeath.Title>
+  <CFR.MarkedDeath.Body>被標記的{0}死亡，死因：{1}</CFR.MarkedDeath.Body>
 </LanguageData>

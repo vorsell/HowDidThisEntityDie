@@ -1,5 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LanguageData>
+  <CFR.Settings.Group.PartWarnings>Уведомления о существах в изоляции</CFR.Settings.Group.PartWarnings>
+  <CFR.Settings.Group.DeathReports>Настройки отчётов о смерти</CFR.Settings.Group.DeathReports>
+  <CFR.Settings.PartWarnings.Entity>Существо</CFR.Settings.PartWarnings.Entity>
+  <CFR.Settings.PartWarnings.BodyPart>Часть тела</CFR.Settings.PartWarnings.BodyPart>
+  <CFR.Settings.PartWarnings.Threshold>Порог HP</CFR.Settings.PartWarnings.Threshold>
+  <CFR.Settings.PartWarnings.Notification>Способ уведомления</CFR.Settings.PartWarnings.Notification>
+  <CFR.Settings.PartWarnings.Add>Добавить предупреждение</CFR.Settings.PartWarnings.Add>
+  <CFR.Settings.PartWarnings.Empty>Предупреждения о здоровье частей тела не настроены.</CFR.Settings.PartWarnings.Empty>
+  <CFR.Settings.PartWarnings.DeleteConfirm>Удалить предупреждение для части «{1}» существа {0}?</CFR.Settings.PartWarnings.DeleteConfirm>
+  <CFR.Settings.PartWarnings.NoAvailableRule>Предупреждения уже настроены для всех доступных сочетаний существ и частей тела.</CFR.Settings.PartWarnings.NoAvailableRule>
+  <CFR.Settings.ContainmentHints.Enabled>Включить уведомления о существах в изоляции</CFR.Settings.ContainmentHints.Enabled>
+  <CFR.Settings.ContainmentHints.Description>Настроенные части тела проверяются только после получения урона существом на фиксирующей платформе. При отключении патч точки получения урона полностью снимается, но сохранённые правила уведомлений остаются.</CFR.Settings.ContainmentHints.Description>
+  <CFR.Settings.ResetPartWarnings>Сбросить уведомления о существах в изоляции?\n\nУведомления будут включены, существующие правила удалены, а следующее стандартное правило восстановлено:\n    Отправлять сообщение, когда здоровье мозга существа {0} достигнет 1 HP или опустится ниже.\n\nНастройки отчётов о смерти, записи об обнаруженных типах и существа в игре не изменятся.</CFR.Settings.ResetPartWarnings>
+  <CFR.PartWarning.Title>Предупреждение о здоровье части тела: {0}</CFR.PartWarning.Title>
+  <CFR.PartWarning.Body>После получения урона здоровье части «{1}» существа {0} составляет {2} HP, достигнув порога предупреждения {3} HP или опустившись ниже.</CFR.PartWarning.Body>
   <CFR.Settings.Title>Как погибло это существо?</CFR.Settings.Title>
   <CFR.Settings.GroupA>Столбец 1</CFR.Settings.GroupA>
   <CFR.Settings.GroupB>Столбец 2</CFR.Settings.GroupB>
@@ -7,7 +22,7 @@
   <CFR.Settings.Mode.Letter>Письмо</CFR.Settings.Mode.Letter>
   <CFR.Settings.LetterType>Тип письма: {0}</CFR.Settings.LetterType>
   <CFR.Settings.Reset>Сбросить</CFR.Settings.Reset>
-  <CFR.Settings.ResetConfirm>Сбросить все настройки уведомлений?\n\nБудут восстановлены два столбца: в первом — письма типа «Серьёзная угроза» для существ из стандартного списка опасных типов; во втором — сообщения для всех остальных распознанных типов. Текущие способы уведомления, типы писем и распределение существ будут заменены настройками по умолчанию.\n\nОбнаруженные типы и состояние раскрытия групп сохранятся. Положение прокрутки изменится только при выходе за допустимые пределы. На существ в игре это не повлияет.</CFR.Settings.ResetConfirm>
+  <CFR.Settings.ResetConfirm>Сбросить настройки отчётов о смерти?\n\nБудут восстановлены два столбца:\n    В первом — письма типа «Серьёзная угроза» для существ из стандартного списка опасных типов.\n    Во втором — сообщения для всех остальных распознанных типов.\n\nТекущие способы уведомления, типы писем, распределение существ и наблюдение за метками будут заменены настройками по умолчанию. Уведомления о существах в изоляции, обнаруженные типы и состояние раскрытия групп сохранятся. На существ в игре это не повлияет.</CFR.Settings.ResetConfirm>
   <CFR.Settings.SourceGroupTip>{0}\nНажмите, чтобы раскрыть или свернуть эту группу во всех столбцах. Распределение существ не изменится.</CFR.Settings.SourceGroupTip>
   <CFR.Settings.UnknownSource>Неизвестный источник</CFR.Settings.UnknownSource>
   <CFR.Settings.Other>Прочие / нераспознанные существа</CFR.Settings.Other>
@@ -80,4 +95,12 @@
   <CFR.Settings.ClearDiscoveryOther>Для обычных неизвестных типов используются настройки «Прочие / нераспознанные существа».</CFR.Settings.ClearDiscoveryOther>
   <CFR.Settings.ClearDiscoveryHeldHuman>Для людей и инопланетян используются соответствующие настройки Held Human.</CFR.Settings.ClearDiscoveryHeldHuman>
   <CFR.Settings.ClearDiscoveryUnassigned>Если резервная категория не назначена ни одному столбцу, обнаруженный заново тип тоже останется без назначения.</CFR.Settings.ClearDiscoveryUnassigned>
+  <CFR.Report.Pawn>Имя: {0}</CFR.Report.Pawn>
+  <CFR.Report.Marks>Метки: {0}</CFR.Report.Marks>
+  <CFR.Settings.Mark.Help>Если включён Useful Marks или Mark That Pawn, ниже можно выбрать метки для наблюдения. По умолчанию наблюдение за метками отключено. При смерти Pawn используется настроенное уведомление с наивысшим приоритетом среди его меток.</CFR.Settings.Mark.Help>
+  <CFR.Settings.Mark.Unnamed>Безымянная метка</CFR.Settings.Mark.Unnamed>
+  <CFR.Settings.Mark.FactionIcon>Значок фракции</CFR.Settings.Mark.FactionIcon>
+  <CFR.Settings.Mark.IdeologyIcon>Значок идеологии</CFR.Settings.Mark.IdeologyIcon>
+  <CFR.MarkedDeath.Title>Смерть отмеченного существа: {0}</CFR.MarkedDeath.Title>
+  <CFR.MarkedDeath.Body>Отмеченное существо {0} погибло. Причина смерти: {1}</CFR.MarkedDeath.Body>
 </LanguageData>

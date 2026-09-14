@@ -22,6 +22,7 @@ namespace ContainmentFatalityReport
         public string Instigator;
         public string Weapon;
         public float HealthPercent;
+        public float Consciousness;
         public float Pain;
         public HealthDeathCause HealthCause;
         public DeathDecisionKind DecisionKind;
@@ -36,20 +37,28 @@ namespace ContainmentFatalityReport
         public static ContainmentDeathSnapshot Capture(Building_HoldingPlatform platform, Pawn pawn, DamageInfo? dinfo,
             NotificationColumn column)
         {
+            return CapturePawn(pawn, platform.Position, platform.Map, dinfo, column);
+        }
+
+        internal static ContainmentDeathSnapshot CapturePawn(Pawn pawn, IntVec3 position, Map map, DamageInfo? dinfo,
+            NotificationColumn column)
+        {
             var snapshot = new ContainmentDeathSnapshot
             {
                 PawnId = pawn.thingIDNumber,
                 PawnLabel = pawn.LabelShortCap,
                 ThingDefName = pawn.def != null ? pawn.def.defName : "?",
                 MutantDefName = pawn.IsMutant ? pawn.mutant.Def.defName : null,
-                Position = platform.Position,
-                Map = platform.Map,
+                Position = position,
+                Map = map,
                 Delivery = column.mode,
                 LetterDefName = column.letterDef
             };
 
             DeathDecisionTrace.Read(pawn, out snapshot.DecisionKind, out snapshot.DecisionChance, out snapshot.AssociatedHediff);
             snapshot.HealthCause = DeathDecisionTrace.ReadHealthCause(pawn);
+            if (snapshot.DecisionKind == DeathDecisionKind.Health && snapshot.HealthCause == null)
+                snapshot.HealthCause = HealthDeathCause.CaptureSafely(pawn, dinfo);
 
             if (dinfo.HasValue)
             {
@@ -69,6 +78,7 @@ namespace ContainmentFatalityReport
             // Short messages need the cause, not a full injury report.
             if (snapshot.Delivery != DeliveryMode.Letter) return snapshot;
             snapshot.HealthPercent = pawn.health.summaryHealth.SummaryHealthPercent;
+            snapshot.Consciousness = pawn.health.capacities.GetLevel(PawnCapacityDefOf.Consciousness);
             snapshot.Pain = pawn.health.hediffSet.PainTotal;
             BodyPartRecord brain = pawn.health.hediffSet.GetBrain();
             BodyPartRecord finalPart = dinfo.HasValue ? dinfo.Value.HitPart : null;
@@ -119,12 +129,15 @@ namespace ContainmentFatalityReport
             }
         }
 
-        public string BuildBody()
+        public string BuildBody(string subjectKey = "CFR.Report.Entity", string marks = null)
         {
             var text = new StringBuilder();
-            text.AppendLine("CFR.Report.Entity".Translate(PawnLabel));
+            text.AppendLine(subjectKey.Translate(PawnLabel));
+            if (!string.IsNullOrEmpty(marks))
+                text.AppendLine("CFR.Report.Marks".Translate(marks));
             text.AppendLine("CFR.Report.Cause".Translate(CauseSummary));
-            text.AppendLine("CFR.Report.ConditionSummary".Translate(Pain.ToString("P0"), HealthPercent.ToString("P0")));
+            text.AppendLine("CFR.Report.Vitals".Translate(Consciousness.ToString("P0"), Pain.ToString("P0"),
+                HealthPercent.ToString("P0")));
             if (DamageLabel != null)
                 text.AppendLine("CFR.Report.Damage".Translate(DamageLabel, DamageAmount.ToString("0.##"), HitPart ?? "-"));
             else
