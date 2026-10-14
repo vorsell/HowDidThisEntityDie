@@ -6,6 +6,7 @@ using Verse;
 namespace ContainmentFatalityReport
 {
     public enum DeliveryMode { Message, Letter }
+    internal enum GroupSelectionState { None, Partial, All }
 
     public sealed class NotificationColumn : IExposable
     {
@@ -419,6 +420,68 @@ namespace ContainmentFatalityReport
         {
             return entityColumns.Values.Any(value => value != columnId) ||
                 markColumns.Values.Any(value => value != columnId);
+        }
+
+        internal GroupSelectionState GroupState(string columnId, IList<string> entityKeys, IList<string> markKeys)
+        {
+            int total = 0, selected = 0;
+            CountGroup(entityColumns, columnId, entityKeys, ref total, ref selected);
+            CountGroup(markColumns, columnId, markKeys, ref total, ref selected);
+            return selected == 0 ? GroupSelectionState.None : selected == total ? GroupSelectionState.All : GroupSelectionState.Partial;
+        }
+
+        private static void CountGroup(Dictionary<string, string> assignments, string columnId,
+            IList<string> keys, ref int total, ref int selected)
+        {
+            if (keys == null) return;
+            foreach (string key in keys)
+            {
+                if (string.IsNullOrEmpty(key)) continue;
+                total++;
+                string owner;
+                if (assignments.TryGetValue(key, out owner) && owner == columnId) selected++;
+            }
+        }
+
+        internal bool WouldClaimGroupOtherColumns(string columnId, IList<string> entityKeys, IList<string> markKeys)
+        {
+            return GroupHasOtherOwner(entityColumns, columnId, entityKeys) || GroupHasOtherOwner(markColumns, columnId, markKeys);
+        }
+
+        private static bool GroupHasOtherOwner(Dictionary<string, string> assignments, string columnId, IList<string> keys)
+        {
+            if (keys == null) return false;
+            foreach (string key in keys)
+            {
+                string owner;
+                if (!string.IsNullOrEmpty(key) && assignments.TryGetValue(key, out owner) && owner != columnId) return true;
+            }
+            return false;
+        }
+
+        internal void SetGroupSelected(string columnId, IList<string> entityKeys, IList<string> markKeys, bool selected)
+        {
+            if (FindColumn(columnId) == null) return;
+            if (entityKeys != null)
+                foreach (string key in entityKeys)
+                {
+                    if (string.IsNullOrEmpty(key)) continue;
+                    RememberType(key);
+                    SetGroupKey(entityColumns, key, columnId, selected);
+                }
+            if (markKeys != null)
+                foreach (string key in markKeys)
+                    if (!string.IsNullOrEmpty(key)) SetGroupKey(markColumns, key, columnId, selected);
+        }
+
+        private static void SetGroupKey(Dictionary<string, string> assignments, string key, string columnId, bool selected)
+        {
+            if (selected) assignments[key] = columnId;
+            else
+            {
+                string owner;
+                if (assignments.TryGetValue(key, out owner) && owner == columnId) assignments.Remove(key);
+            }
         }
 
         internal void SelectAll(string columnId, IEnumerable<ContainmentCandidate> candidates,

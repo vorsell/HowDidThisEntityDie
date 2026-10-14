@@ -18,6 +18,9 @@ namespace ContainmentFatalityReport
         private float viewportWidth = 1f;
         private string dragColumnId;
         private bool dragValue;
+        private string pressedSourceId;
+        private string pressedSourceColumn;
+        private bool pressedSourceSelection;
         private bool deferPlatformScan;
         private SettingsPage currentPage = SettingsPage.ContainmentAlerts;
         private Vector2 partWarningScroll;
@@ -25,6 +28,8 @@ namespace ContainmentFatalityReport
         private List<ContainmentCandidate> layoutCandidates;
         private List<ContainmentSettingsRow> visibleRows;
         private List<MarkMonitorOption> layoutMarks;
+        private List<DeathSettingsRow> deathRows;
+        private List<MarkMonitorOption> deathRowMarks;
         private readonly Dictionary<string, bool> expansionOverrides = new Dictionary<string, bool>(StringComparer.OrdinalIgnoreCase);
         private const float ColumnWidth = 304f;
         private const float Gutter = 18f;
@@ -59,6 +64,8 @@ namespace ContainmentFatalityReport
             // use SaveSettings so clearing discovery lasts until the next visit.
             deferPlatformScan = false;
             layoutMarks = null;
+            ClearSourcePress();
+            dragColumnId = null;
             SaveSettings();
         }
 
@@ -91,7 +98,12 @@ namespace ContainmentFatalityReport
         private void DrawPageButton(Rect rect, SettingsPage page, string label)
         {
             if (currentPage == page) Widgets.DrawBoxSolid(rect, new Color(1f, 1f, 1f, 0.12f));
-            if (Widgets.ButtonText(rect, label)) currentPage = page;
+            if (Widgets.ButtonText(rect, label))
+            {
+                currentPage = page;
+                ClearSourcePress();
+                dragColumnId = null;
+            }
         }
 
         private void DrawContainmentAlerts(Rect inRect)
@@ -136,8 +148,14 @@ namespace ContainmentFatalityReport
             {
                 layoutCandidates = candidates;
                 visibleRows = ContainmentSettingsLayout.BuildRows(candidates, expansionOverrides);
+                deathRows = null;
             }
-            List<DeathSettingsRow> rows = BuildDeathRows(visibleRows, markOptions);
+            if (deathRows == null || !ReferenceEquals(deathRowMarks, markOptions))
+            {
+                deathRows = BuildDeathRows(visibleRows, markOptions);
+                deathRowMarks = markOptions;
+            }
+            List<DeathSettingsRow> rows = deathRows;
             viewportWidth = Math.Max(1f, inRect.width - 16f);
             float contentWidth = ContentWidth(Settings.columns.Count);
             horizontalScroll = Mathf.Clamp(horizontalScroll, 0f, MaxHorizontalScroll(Settings.columns.Count, viewportWidth));
@@ -155,7 +173,12 @@ namespace ContainmentFatalityReport
                 (int)Math.Ceiling((horizontalScroll + viewportWidth) / (ColumnWidth + Gutter)));
 
             if (Event.current.rawType == EventType.MouseDown)
+            {
                 dragColumnId = null;
+                ClearSourcePress();
+            }
+            if (Event.current.rawType == EventType.MouseDrag || Event.current.rawType == EventType.ScrollWheel)
+                ClearSourcePress();
 
             // Clip headers separately so they stay fixed during vertical scrolling.
             // Both header and body columns use the SAME horizontal offset.
@@ -176,30 +199,51 @@ namespace ContainmentFatalityReport
             scrollPosition.y = Mathf.Clamp(scrollPosition.y, 0f, Math.Max(0f, viewRect.height - outRect.height));
             bool pointerOverBody = new Rect(outRect.x, outRect.y, viewportWidth, outRect.height).Contains(Event.current.mousePosition);
             Widgets.BeginScrollView(outRect, ref scrollPosition, viewRect);
+            float pinnedY;
+            int pinnedIndex = FindPinnedHeader(rows, scrollPosition.y, out pinnedY);
             for (int columnIndex = firstColumn; columnIndex < lastColumn; columnIndex++)
             {
                 NotificationColumn column = Settings.columns[columnIndex];
                 float x = ColumnX(columnIndex);
                 DrawSeparator(x, columnIndex, viewRect.height);
+                Rect pinnedRect = new Rect(x, pinnedY, ColumnWidth, RowHeight);
+                bool overPinned = pinnedIndex >= 0 && pointerOverBody && pinnedRect.Contains(Event.current.mousePosition);
+                // Handle the overlay first; covered rows must never receive input.
+                if (pinnedIndex >= 0 && pointerOverBody)
+                    HandleSourceHeaderInput(pinnedRect, rows[pinnedIndex], column, columnIndex);
                 for (int i = 0; i < rows.Count; i++)
                 {
+                    if (i == pinnedIndex) continue;
                     float y = i * RowHeight;
                     if (y + RowHeight < scrollPosition.y || y > scrollPosition.y + outRect.height) continue;
                     Rect rowRect = new Rect(x, y, ColumnWidth, RowHeight - 2f);
-                    if (rows[i].IsHeader) DrawSourceHeader(rowRect, rows[i]);
+                    if (rows[i].IsHeader)
+                    {
+                        DrawSourceHeader(rowRect, rows[i], column);
+                        if (pointerOverBody && !overPinned)
+                            HandleSourceHeaderInput(rowRect, rows[i], column, columnIndex);
+                    }
                     else
                     {
                         if (rows[i].SourceId != null) { rowRect.x += 14f; rowRect.width -= 14f; }
                         if (rows[i].Candidate != null)
-                            DrawCandidateRow(rowRect, rows[i].Candidate, column.id, pointerOverBody);
+                            DrawCandidateRow(rowRect, rows[i].Candidate, column.id, pointerOverBody && !overPinned);
                         else
-                            DrawMarkRow(rowRect, rows[i].Mark, column.id, pointerOverBody);
+                            DrawMarkRow(rowRect, rows[i].Mark, column.id, pointerOverBody && !overPinned);
                     }
+                }
+                if (pinnedIndex >= 0)
+                {
+                    Widgets.DrawBoxSolid(pinnedRect, new Color(0.16f, 0.17f, 0.18f, 1f));
+                    DrawSourceHeader(pinnedRect, rows[pinnedIndex], column);
                 }
             }
             Widgets.EndScrollView();
             if (Event.current.rawType == EventType.MouseUp || Event.current.type == EventType.Ignore)
+            {
                 dragColumnId = null;
+                ClearSourcePress();
+            }
 
             if (Settings.columns.Count == 0)
                 Widgets.Label(new Rect(inRect.x + 8f, inRect.y + 12f, viewportWidth - 16f, 80f),
@@ -422,6 +466,7 @@ namespace ContainmentFatalityReport
         private void OnColumnsChanged(bool focusLastColumn = false)
         {
             dragColumnId = null;
+            ClearSourcePress();
             float maximum = MaxHorizontalScroll(Settings.columns.Count, viewportWidth);
             horizontalScroll = focusLastColumn ? maximum : Mathf.Clamp(horizontalScroll, 0f, maximum);
         }
@@ -436,18 +481,78 @@ namespace ContainmentFatalityReport
             if (index > 0) Widgets.DrawBoxSolid(new Rect(x - Gutter / 2f, 0f, 1f, height), Color.white);
         }
 
-        private void DrawSourceHeader(Rect rect, DeathSettingsRow row)
+        private void DrawSourceHeader(Rect rect, DeathSettingsRow row, NotificationColumn column)
         {
             Widgets.DrawHighlight(rect);
-            Widgets.Label(new Rect(rect.x + 6f, rect.y + 3f, rect.width - 36f, 24f), row.SourceLabel.Truncate(rect.width - 36f));
+            Rect stateRect = new Rect(rect.x, rect.y, 30f, rect.height);
+            GroupSelectionState state = Settings.GroupState(column.id, row.EntityKeys, row.MarkKeys);
+            // Reuse vanilla's green check/red cross/yellow partial textures,
+            // with the same size and alignment as the member-row checkboxes.
+            // Draw only: the separate completed-click handler owns group input.
+            Widgets.CheckboxDraw(rect.x + 4f, rect.y + 3f, state != GroupSelectionState.None, false, 22f,
+                state == GroupSelectionState.Partial ? Widgets.CheckboxPartialTex : null, null);
+            Widgets.Label(new Rect(rect.x + 32f, rect.y + 3f, rect.width - 62f, 24f), row.SourceLabel.Truncate(rect.width - 62f));
             Widgets.Label(new Rect(rect.xMax - 24f, rect.y + 3f, 24f, 24f), row.Expanded ? "▼" : "▶");
-            TooltipHandler.TipRegion(rect, "CFR.Settings.SourceGroupTip".Translate(row.SourceLabel));
-            if (Widgets.ButtonInvisible(rect))
+            TooltipHandler.TipRegion(stateRect, "CFR.Settings.SourceGroupSelectionTip".Translate(row.SourceLabel));
+            TooltipHandler.TipRegion(new Rect(rect.x + 30f, rect.y, rect.width - 30f, rect.height),
+                "CFR.Settings.SourceGroupTip".Translate(row.SourceLabel));
+        }
+
+        private void ClearSourcePress()
+        {
+            pressedSourceId = null;
+            pressedSourceColumn = null;
+        }
+
+        private void HandleSourceHeaderInput(Rect rect, DeathSettingsRow row, NotificationColumn column, int columnIndex)
+        {
+            Event evt = Event.current;
+            if (evt.rawType == EventType.MouseDrag || evt.rawType == EventType.ScrollWheel)
+                ClearSourcePress();
+            if (dragColumnId != null || evt.button != 0 || !rect.Contains(evt.mousePosition)) return;
+            bool selection = evt.mousePosition.x < rect.x + 30f;
+            if (evt.type == EventType.MouseDown)
             {
-                expansionOverrides[row.SourceId] = !row.Expanded;
-                visibleRows = null;
-                dragColumnId = null;
+                pressedSourceId = row.SourceId;
+                pressedSourceColumn = column.id;
+                pressedSourceSelection = selection;
+                evt.Use();
             }
+            else if (evt.type == EventType.MouseUp && pressedSourceId == row.SourceId &&
+                pressedSourceColumn == column.id && pressedSourceSelection == selection)
+            {
+                ClearSourcePress();
+                evt.Use();
+                if (!selection)
+                {
+                    expansionOverrides[row.SourceId] = !row.Expanded;
+                    visibleRows = null;
+                    return;
+                }
+                bool select = Settings.GroupState(column.id, row.EntityKeys, row.MarkKeys) != GroupSelectionState.All;
+                Action apply = delegate
+                {
+                    Settings.SetGroupSelected(column.id, row.EntityKeys, row.MarkKeys, select);
+                    SaveSettings();
+                };
+                if (select && Settings.WouldClaimGroupOtherColumns(column.id, row.EntityKeys, row.MarkKeys))
+                    Find.WindowStack.Add(Dialog_MessageBox.CreateConfirmation(
+                        "CFR.Settings.SourceGroupSelectConfirm".Translate(row.SourceLabel, columnIndex + 1), apply));
+                else apply();
+            }
+        }
+
+        private static int FindPinnedHeader(List<DeathSettingsRow> rows, float scrollTop, out float y)
+        {
+            y = 0f;
+            int found = -1;
+            for (int i = 0; i < rows.Count && i * RowHeight < scrollTop; i++)
+            {
+                if (!rows[i].IsHeader) continue;
+                float? position = ContainmentSettingsLayout.PinnedHeaderY(i, rows[i].EndRowExclusive, scrollTop, RowHeight);
+                if (position.HasValue) { found = i; y = position.Value; }
+            }
+            return found;
         }
 
         private void DrawColumnControls(Rect rect, NotificationColumn column, int index)
@@ -591,13 +696,17 @@ namespace ContainmentFatalityReport
                 {
                     SourceId = sourceId,
                     SourceLabel = group.First().SourceLabel,
-                    Expanded = expanded
+                    Expanded = expanded,
+                    MarkKeys = group.Select(mark => mark.Key).Distinct(StringComparer.Ordinal).ToList()
                 });
                 if (expanded)
                     result.AddRange(group.OrderBy(mark => mark.Label, StringComparer.CurrentCultureIgnoreCase)
                         .Select(mark => new DeathSettingsRow { Mark = mark, SourceId = sourceId }));
             }
             result.AddRange(entityRows.Skip(fallbackCount).Select(ToDeathSettingsRow));
+            int end = result.Count;
+            for (int i = result.Count - 1; i >= 0; i--)
+                if (result[i].IsHeader) { result[i].EndRowExclusive = end; end = i; }
             return result;
         }
 
@@ -608,7 +717,8 @@ namespace ContainmentFatalityReport
                 Candidate = row.Candidate,
                 SourceId = row.SourceId,
                 SourceLabel = row.SourceLabel,
-                Expanded = row.Expanded
+                Expanded = row.Expanded,
+                EntityKeys = row.EntityKeys
             };
         }
 
@@ -619,6 +729,9 @@ namespace ContainmentFatalityReport
             internal string SourceId;
             internal string SourceLabel;
             internal bool Expanded;
+            internal List<string> EntityKeys;
+            internal List<string> MarkKeys;
+            internal int EndRowExclusive;
             internal bool IsHeader { get { return Candidate == null && Mark == null; } }
         }
 

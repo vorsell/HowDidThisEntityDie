@@ -103,4 +103,6 @@
   <CFR.Settings.Mark.IdeologyIcon>文化图标</CFR.Settings.Mark.IdeologyIcon>
   <CFR.MarkedDeath.Title>被标记的{0}死亡</CFR.MarkedDeath.Title>
   <CFR.MarkedDeath.Body>被标记的{0}死亡，死因：{1}</CFR.MarkedDeath.Body>
+  <CFR.Settings.SourceGroupSelectionTip>{0}\n√ 本列全选；× 本列未选；~ 本列部分选中。单击可全选整组（包含折叠项）；已全选时取消整组。拖拽不会修改分类。</CFR.Settings.SourceGroupSelectionTip>
+  <CFR.Settings.SourceGroupSelectConfirm>将“{0}”中的全部选项移到第 {1} 列？只改变本分类的归属，不影响其他分类或通知样式。</CFR.Settings.SourceGroupSelectConfirm>
 </LanguageData>

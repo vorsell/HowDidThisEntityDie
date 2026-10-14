@@ -103,4 +103,6 @@
   <CFR.Settings.Mark.IdeologyIcon>Значок идеологии</CFR.Settings.Mark.IdeologyIcon>
   <CFR.MarkedDeath.Title>Смерть отмеченного существа: {0}</CFR.MarkedDeath.Title>
   <CFR.MarkedDeath.Body>Отмеченное существо {0} погибло. Причина смерти: {1}</CFR.MarkedDeath.Body>
+  <CFR.Settings.SourceGroupSelectionTip>{0}\n√ Выбрано всё; × ничего; ~ часть элементов в этом столбце. Нажмите, чтобы выбрать всю группу, включая свёрнутые элементы, или снять выбор со всей выбранной группы. Перетаскивание не меняет группы.</CFR.Settings.SourceGroupSelectionTip>
+  <CFR.Settings.SourceGroupSelectConfirm>Перенести все элементы группы «{0}» в столбец {1}? Изменится только распределение этой группы; другие группы и стили уведомлений сохранятся.</CFR.Settings.SourceGroupSelectConfirm>
 </LanguageData>

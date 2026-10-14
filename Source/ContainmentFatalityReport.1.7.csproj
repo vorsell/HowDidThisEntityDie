@@ -1,0 +1,53 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <OutputType>Library</OutputType>
+    <AssemblyName>ContainmentFatalityReport</AssemblyName>
+    <RootNamespace>ContainmentFatalityReport</RootNamespace>
+    <LangVersion>7.3</LangVersion>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <Nullable>disable</Nullable>
+    <DefineConstants>$(DefineConstants);RIMWORLD_1_7</DefineConstants>
+    <Deterministic>true</Deterministic>
+    <Optimize Condition="'$(Configuration)' == 'Release'">true</Optimize>
+    <DebugType>none</DebugType>
+    <DebugSymbols>false</DebugSymbols>
+    <GenerateDependencyFile>false</GenerateDependencyFile>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
+    <OutputPath>..\1.7\Assemblies\</OutputPath>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Assembly-CSharp">
+      <HintPath>G:\SteamLibrary\steamapps\common\RimWorld\Assembly-CSharp.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityStubs">
+      <HintPath>G:\SteamLibrary\steamapps\common\RimWorld\UnityStubs.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="0Harmony">
+      <HintPath>G:\SteamLibrary\steamapps\workshop\content\294100\2009463077\1.7\Assemblies\0Harmony.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="ContainmentFatalityReportMod.cs" />
+    <Compile Include="ContainmentColumnSettings.cs" />
+    <Compile Include="ContainmentRegistry.cs" />
+    <Compile Include="DeathReportDefaultsDef.cs" />
+    <Compile Include="ContainmentSettingsLayout.cs" />
+    <Compile Include="PartHealthWarning.cs" />
+    <Compile Include="ContainmentHintPatchController.cs" />
+    <Compile Include="MarkedPawnMonitoring.cs" />
+    <Compile Include="MarkedPawnRules.cs" />
+    <Compile Include="DeathReport.cs" />
+    <Compile Include="HealthDeathCause.cs" />
+    <Compile Include="DeathDecisionTrace.cs" />
+    <Compile Include="ElectroharvesterDevGizmo.cs" />
+    <Compile Include="HarmonyPatches.cs" />
+  </ItemGroup>
+</Project>

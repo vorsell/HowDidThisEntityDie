@@ -103,4 +103,6 @@
   <CFR.Settings.Mark.IdeologyIcon>Ideology icon</CFR.Settings.Mark.IdeologyIcon>
   <CFR.MarkedDeath.Title>Marked pawn died: {0}</CFR.MarkedDeath.Title>
   <CFR.MarkedDeath.Body>Marked pawn {0} died. Cause of death: {1}</CFR.MarkedDeath.Body>
+  <CFR.Settings.SourceGroupSelectionTip>{0}\n√ All selected; × none; ~ partially selected in this column. Click to select the whole group (including collapsed items), or clear it if all are selected. Dragging does not change groups.</CFR.Settings.SourceGroupSelectionTip>
+  <CFR.Settings.SourceGroupSelectConfirm>Move all items in {0} to column {1}? Only this group's assignments will change; other groups and notification styles are preserved.</CFR.Settings.SourceGroupSelectConfirm>
 </LanguageData>

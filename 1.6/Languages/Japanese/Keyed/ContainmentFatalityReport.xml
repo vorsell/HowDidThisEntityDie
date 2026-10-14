@@ -103,4 +103,6 @@
   <CFR.Settings.Mark.IdeologyIcon>イデオロギーアイコン</CFR.Settings.Mark.IdeologyIcon>
   <CFR.MarkedDeath.Title>マーク対象の{0}が死亡</CFR.MarkedDeath.Title>
   <CFR.MarkedDeath.Body>マーク対象の{0}が死亡しました。死因：{1}</CFR.MarkedDeath.Body>
+  <CFR.Settings.SourceGroupSelectionTip>{0}\n√ この列ですべて選択；× 未選択；~ 一部選択。クリックで折りたたみ中の項目も含めて一括選択し、全選択済みなら解除します。ドラッグではグループを変更しません。</CFR.Settings.SourceGroupSelectionTip>
+  <CFR.Settings.SourceGroupSelectConfirm>「{0}」のすべての項目を列 {1} に移動しますか？このグループの割り当てだけが変わり、他のグループや通知形式は維持されます。</CFR.Settings.SourceGroupSelectConfirm>
 </LanguageData>

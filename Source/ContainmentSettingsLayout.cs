@@ -11,6 +11,7 @@ namespace ContainmentFatalityReport
         internal string SourceId;
         internal string SourceLabel;
         internal bool Expanded;
+        internal List<string> EntityKeys;
         internal bool IsHeader { get { return Candidate == null; } }
     }
 
@@ -29,6 +30,15 @@ namespace ContainmentFatalityReport
         internal static bool IsCommonLetterType(string defName)
         {
             return CommonLetterTypes.Contains(defName);
+        }
+
+        // The last two member rows push the title out, even in the final group.
+        internal static float? PinnedHeaderY(int headerRow, int endRowExclusive, float scrollTop, float rowHeight)
+        {
+            if (rowHeight <= 0f || endRowExclusive <= headerRow + 1 || scrollTop <= headerRow * rowHeight)
+                return null;
+            float y = Math.Min(scrollTop, Math.Max(headerRow * rowHeight, (endRowExclusive - 2) * rowHeight));
+            return y + rowHeight > scrollTop ? (float?)y : null;
         }
 
         internal static string ClearDiscoveryConfirmation(bool heldHumanActive)
@@ -63,7 +73,8 @@ namespace ContainmentFatalityReport
                 {
                     SourceId = group.Key,
                     SourceLabel = group.Key == HumanlikeGroupId ? "CFR.Settings.HumanlikeGroup".Translate().ToString() : group.First().SourceLabel ?? group.Key,
-                    Expanded = expanded
+                    Expanded = expanded,
+                    EntityKeys = group.Select(candidate => candidate.Key).Distinct(StringComparer.Ordinal).ToList()
                 });
                 if (!expanded) continue;
                 foreach (ContainmentCandidate candidate in group.OrderByDescending(item => item.DangerousAfterDeath)

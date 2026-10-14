@@ -103,4 +103,6 @@
   <CFR.Settings.Mark.IdeologyIcon>이념 아이콘</CFR.Settings.Mark.IdeologyIcon>
   <CFR.MarkedDeath.Title>표식 대상 사망: {0}</CFR.MarkedDeath.Title>
   <CFR.MarkedDeath.Body>표식 대상 {0} 사망. 사망 원인: {1}</CFR.MarkedDeath.Body>
+  <CFR.Settings.SourceGroupSelectionTip>{0}\n√ 이 열에서 모두 선택; × 선택 없음; ~ 일부 선택. 클릭하면 접힌 항목을 포함한 그룹 전체를 선택하며, 모두 선택된 경우 전체 선택을 해제합니다. 드래그로는 그룹이 변경되지 않습니다.</CFR.Settings.SourceGroupSelectionTip>
+  <CFR.Settings.SourceGroupSelectConfirm>'{0}' 그룹의 모든 항목을 {1}열로 옮기시겠습니까? 이 그룹의 배정만 변경되며 다른 그룹과 알림 형식은 유지됩니다.</CFR.Settings.SourceGroupSelectConfirm>
 </LanguageData>
